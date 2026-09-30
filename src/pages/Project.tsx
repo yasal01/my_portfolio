@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { accents } from '../components/accents'
 import { SectionReveal } from '../components/SectionReveal'
 import { VideoCard } from '../components/VideoCard'
 import { getNextProject, getProject } from '../data/projects'
@@ -27,9 +28,19 @@ export function Project() {
           <p className="mt-4 max-w-xl text-base text-muted sm:text-lg">{project.summary}</p>
         </SectionReveal>
         <SectionReveal className="mt-8 sm:mt-10">
-          <div className="aspect-[3/4] overflow-hidden rounded-[24px] bg-blush sm:rounded-[2rem] md:aspect-[16/9]">
-            <VideoCard media={project.cover} accent={project.accent} overlay={false} />
-          </div>
+          {project.cover.orientation === 'horizontal' ? (
+            <div className={`rounded-[24px] p-2.5 sm:rounded-[2rem] sm:p-4 ${accents[project.accent]}`}>
+              <div className="aspect-video overflow-hidden rounded-[18px] bg-ivory sm:rounded-[1.6rem]">
+                <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+              </div>
+            </div>
+          ) : (
+            <div className={`rounded-[24px] px-4 py-6 sm:rounded-[2rem] sm:py-10 md:py-14 ${accents[project.accent]}`}>
+              <div className="mx-auto aspect-[9/16] w-full max-w-[400px] overflow-hidden rounded-[20px] bg-ivory shadow-[0_18px_50px_rgba(29,29,29,0.08)] sm:rounded-[28px]">
+                <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+              </div>
+            </div>
+          )}
         </SectionReveal>
       </section>
 
@@ -56,17 +67,35 @@ export function Project() {
         </SectionReveal>
       </section>
 
-      <section className="wrap mt-12 sm:mt-16">
-        <div className="grid gap-4 sm:gap-5 md:grid-cols-2">
-          {project.gallery.map((media, index) => (
-            <SectionReveal key={`${project.slug}-${index}`} delay={index * 0.05}>
-              <div className={`overflow-hidden rounded-[20px] bg-blush sm:rounded-[1.6rem] ${index === 0 ? 'aspect-[3/4] md:aspect-[4/5]' : 'aspect-[4/5] md:aspect-[16/10]'}`}>
-                <VideoCard media={media} accent={project.accent} overlay={false} />
-              </div>
-            </SectionReveal>
-          ))}
-        </div>
-      </section>
+      {project.gallery.length > 0 ? (
+        <section className="wrap mt-12 sm:mt-16">
+          <SectionReveal>
+            <p className="text-[11px] tracking-[0.2em] text-muted uppercase">More from this project</p>
+          </SectionReveal>
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3">
+            {project.gallery.map((media, index) => (
+              <SectionReveal
+                key={media.src ?? index}
+                delay={index * 0.05}
+                className={media.orientation === 'horizontal' ? 'col-span-2' : ''}
+              >
+                <figure>
+                  <div
+                    className={`overflow-hidden rounded-[20px] ${accents[project.accent]} sm:rounded-[1.6rem] ${media.orientation === 'horizontal' ? 'aspect-video' : 'aspect-[9/16]'}`}
+                  >
+                    <VideoCard media={media} accent={project.accent} overlay={false} autoPlay />
+                  </div>
+                  {media.caption ? (
+                    <figcaption className="mt-2 text-[10px] tracking-[0.18em] text-muted uppercase sm:text-[11px]">
+                      {media.caption}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              </SectionReveal>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <div className="wrap mt-12 border-t border-line pt-8 sm:mt-16 sm:pt-10">
         <Link to={`/work/${next.slug}`} className="group inline-flex max-w-full items-start gap-3">

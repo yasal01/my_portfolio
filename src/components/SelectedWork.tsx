@@ -1,22 +1,29 @@
 import { projects } from '../data/projects'
-import { ProjectCard } from './ProjectCard'
-import { SectionReveal } from './SectionReveal'
+import { FeatureProject, WideProject } from './ProjectCard'
+import { SectionHeading } from './SectionHeading'
 
 export function SelectedWork() {
+  const featured = projects.filter((project) => project.size === 'feature')
+  const wide = projects.filter((project) => project.size === 'wide')
+
   return (
-    <section id="work" className="scroll-mt-24 bg-[#fbfbfb] py-14 sm:py-20 md:py-28">
+    <section id="work" className="scroll-mt-20 bg-[#fbfbfb] pt-20 pb-16 sm:pt-28 sm:pb-24 md:pt-36">
       <div className="wrap">
-        <SectionReveal className="mb-8 grid gap-3 sm:mb-10 md:mb-14 md:grid-cols-2 md:items-end">
-          <h2 className="font-serif text-[clamp(2rem,7vw,3.75rem)] font-extrabold tracking-tight">Selected work</h2>
-          <p className="text-sm text-muted sm:text-base">
-            A few things I&apos;ve created — UGC, campaigns, and social stories for brands.
-          </p>
-        </SectionReveal>
-        <div className="grid gap-4 sm:gap-5">
-          {projects.map((project, index) => (
-            <SectionReveal key={project.slug} delay={index * 0.04}>
-              <ProjectCard project={project} reverse={index % 2 === 1} />
-            </SectionReveal>
+        <SectionHeading
+          eyebrow="Selected work"
+          title={
+            <>
+              Case studies, <span className="font-script font-semibold tracking-normal">not</span> just clips.
+            </>
+          }
+          text="Real products, real people, real rooms. Each project starts with one hook and one feeling, then gets filmed, styled and cut for the feed."
+        />
+        <div className="mt-12 grid gap-20 sm:mt-16 md:gap-28">
+          {featured.map((project) => (
+            <FeatureProject key={project.slug} project={project} />
+          ))}
+          {wide.map((project) => (
+            <WideProject key={project.slug} project={project} />
           ))}
         </div>
       </div>

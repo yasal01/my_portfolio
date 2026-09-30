@@ -1,3 +1,4 @@
+import { useReducedMotion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import type { ProjectMedia } from '../data/projects'
 
@@ -55,13 +56,29 @@ export function VideoCard({
   const hasVideo = media.type === 'video' && Boolean(media.src)
   const hasImage = media.type === 'image' && Boolean(media.src)
 
+  const reduceMotion = useReducedMotion()
+  const shouldAutoPlay = autoPlay && !reduceMotion
+
+  // Autoplay only while on screen, so a page of clips doesn't decode all at once.
   useEffect(() => {
-    if (!autoPlay || !hasVideo) return
+    if (!shouldAutoPlay || !hasVideo) return
     const video = videoRef.current
     if (!video) return
     video.muted = true
-    void video.play().then(() => setPlaying(true)).catch(() => undefined)
-  }, [autoPlay, hasVideo, media.src])
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          void video.play().then(() => setPlaying(true)).catch(() => undefined)
+        } else {
+          video.pause()
+          setPlaying(false)
+        }
+      },
+      { threshold: 0.25 },
+    )
+    observer.observe(video)
+    return () => observer.disconnect()
+  }, [shouldAutoPlay, hasVideo, media.src])
 
   function play() {
     if (!hasVideo) return
@@ -71,7 +88,7 @@ export function VideoCard({
   }
 
   function pause() {
-    if (autoPlay) return
+    if (shouldAutoPlay) return
     const video = videoRef.current
     if (!video) return
     video.pause()
@@ -104,8 +121,7 @@ export function VideoCard({
           muted
           loop
           playsInline
-          autoPlay={autoPlay}
-          preload={autoPlay ? 'auto' : 'metadata'}
+          preload="metadata"
           aria-label={media.alt}
         />
       ) : hasImage ? (
@@ -119,7 +135,7 @@ export function VideoCard({
         <MediaPlaceholder accent={accent} />
       )}
 
-      {hasVideo ? (
+      {hasVideo && !autoPlay ? (
         <button
           type="button"
           className="absolute inset-0 z-10 md:hidden"

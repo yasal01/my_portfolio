@@ -73,6 +73,27 @@ video {
   max-width: 100%;
 }
 
+/* Text link with an underline that draws in on hover (also when hovering the parent .group/link) */
+.link-underline {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  padding-bottom: 2px;
+  transition: background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover,
+.group\/link:hover .link-underline {
+  background-size: 100% 1px;
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(220%);
+  }
+}
+
 @keyframes marquee {
   to {
     transform: translateX(-50%);

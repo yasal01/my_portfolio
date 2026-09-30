@@ -14,11 +14,11 @@ function InstagramIcon() {
 
 export function Contact() {
   return (
-    <section id="contact" className="scroll-mt-24 bg-blush py-14 sm:py-20 md:py-28">
+    <section id="contact" className="scroll-mt-20 bg-blush py-20 sm:py-28 md:py-36">
       <div className="wrap">
         <SectionReveal>
           <p className="font-script text-2xl">Let’s work together</p>
-          <h2 className="mt-3 max-w-[16ch] font-serif text-[clamp(2.1rem,8vw,4.5rem)] leading-[0.95] font-extrabold tracking-tight">
+          <h2 className="mt-3 max-w-[16ch] font-serif text-[clamp(2.4rem,8vw,5.6rem)] leading-[0.95] font-extrabold tracking-[-0.035em]">
             Have a product that deserves to be seen?
           </h2>
           <p className="mt-5 max-w-md text-base text-muted sm:mt-6 sm:text-lg">
@@ -26,9 +26,15 @@ export function Contact() {
           </p>
           <a
             href={`mailto:${siteConfig.email}`}
-            className="mt-7 inline-flex w-full items-center justify-center rounded-full bg-ink px-8 py-4 text-ivory transition-transform hover:-translate-y-0.5 sm:mt-8 sm:w-auto"
+            className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-ink px-8 py-4 text-ivory transition-transform hover:-translate-y-0.5 sm:mt-10 sm:w-auto"
           >
             Start a Collaboration
+          </a>
+          <a
+            href={`mailto:${siteConfig.email}`}
+            className="group/link mt-6 block w-fit max-w-full font-serif text-[clamp(1.2rem,3.4vw,1.9rem)] font-bold tracking-tight break-all sm:mt-8"
+          >
+            <span className="link-underline">{siteConfig.email}</span>
           </a>
           <div className="mt-8 flex flex-col gap-3 min-[400px]:flex-row min-[400px]:flex-wrap sm:mt-10">
             <a

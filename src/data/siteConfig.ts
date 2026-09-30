@@ -10,7 +10,10 @@ export const siteConfig = {
   firstName: 'Yasal',
   title: 'Content Creator • UGC Creator • Social Media Creative',
   eyebrow: 'Content Creator • UGC • Social Media',
-  headline: 'Content that makes people stop scrolling.',
+  headline: 'Content that makes people',
+  headlineAccent: 'stop scrolling.',
+  heroText:
+    'UGC, product films and event reels for beauty, lifestyle and product brands. Filmed, styled and edited with a story-first eye.',
   intro:
     "I'm Yasal — a content creator and UGC creative creating aesthetic, relatable and scroll-stopping content for brands.",
   aboutHeading: "Hi, I'm Yasal.",
@@ -31,6 +34,15 @@ export const siteConfig = {
     { label: 'About', href: '/#about' },
     { label: 'Services', href: '/#services' },
     { label: 'Contact', href: '/#contact' },
+  ],
+
+  /** Header menu. `id` matches the section id on the home page; `accent` colours its active pill. */
+  menu: [
+    { id: 'home', label: 'Home', href: '/', accent: 'bg-pink' },
+    { id: 'work', label: 'Work', href: '/#work', accent: 'bg-lavender' },
+    { id: 'services', label: 'Services', href: '/#services', accent: 'bg-sky' },
+    { id: 'about', label: 'About', href: '/#about', accent: 'bg-mint' },
+    { id: 'contact', label: 'Contact', href: '/#contact', accent: 'bg-yellow' },
   ],
 
   aboutSkills: [
@@ -71,31 +83,8 @@ export const siteConfig = {
     'Lifestyle',
     'Product films',
     'Reels',
+    'Event reels',
     'Campaigns',
     'Social storytelling',
-  ],
-
-  /** Slugs from projects.ts shown as 9:16 featured cards after the hero */
-  featuredSlugs: ['soft-glow-oil', 'beauty-ugc', 'social-media-content'],
-
-  introCards: [
-    {
-      title: 'My Work',
-      text: 'Selected films, UGC, and campaigns — the stories I’m most proud to put on screen.',
-      href: '/#work',
-      accent: 'lavender',
-    },
-    {
-      title: 'About Me',
-      text: 'A closer look at how I make content that feels natural, modern, and memorable.',
-      href: '/#about',
-      accent: 'mint',
-    },
-    {
-      title: 'Contact Me',
-      text: 'Let’s make the next launch, series, or collab feel like it belongs to your brand.',
-      href: '/#contact',
-      accent: 'yellow',
-    },
   ],
 }
