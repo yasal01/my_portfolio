@@ -48,6 +48,9 @@ function ShortProject({ project, index }: { project: Project; index: number }) {
         <NameTape className="relative z-20 -mt-5" rotate={index % 2 === 0 ? -2 : 2}>
           {project.title}
         </NameTape>
+        <p className="mt-3 text-center font-mono text-[10px] leading-relaxed tracking-[0.14em] text-ink/70 uppercase sm:text-[11px]">
+          <span className="text-rose">My role ·</span> {project.roles.join(' · ')}
+        </p>
         <FactCard facts={project.facts} className="relative z-10 mt-4" />
         <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
           <Chip tone={chipTones[index % chipTones.length]}>{project.chip}</Chip>
@@ -76,8 +79,8 @@ export function ShortForm() {
       <Sparkle className="top-[70%] left-[10%] h-3 w-3" tone="white" delay={1.4} />
 
       <div className="wrap relative">
-        <ScrapHeading label="Short-form" tone="pink" sub="Vertical videos built for reels, TikTok and stories. Tap any phone to open the project.">
-          Videos that <span className="highlight">stop</span> the scroll
+        <ScrapHeading label="Video editing · Short-form" tone="pink" sub="Reels and short-form videos I planned and edited for brands. Tap any phone to open the project.">
+          Edits that <span className="highlight">stop</span> the scroll
         </ScrapHeading>
 
         <div className="mt-16 grid gap-20 sm:mt-20 md:grid-cols-3 md:gap-10">

@@ -134,6 +134,31 @@ export function Hero() {
             </motion.div>
           ) : null}
 
+          {/* role stickers: what I do, readable in the first second */}
+          {[
+            { label: 'Social Media Manager', icon: '✦', cls: 'top-[28%] left-[0%] sm:left-[4%] lg:left-[10%]', rot: -6, delay: 0.75, tint: 'from-[#ffe1ef] to-white' },
+            { label: 'Video Editor', icon: '✂', cls: 'top-[52%] right-[0%] sm:right-[6%] lg:right-[22%]', rot: 5, delay: 0.85, tint: 'from-[#e6dcff] to-white' },
+            { label: 'Content Creator', icon: '▶', cls: 'top-[70%] left-[0%] sm:left-[10%] lg:left-[18%]', rot: -3, delay: 0.95, tint: 'from-[#d7ebff] to-white' },
+          ].map((chip) => (
+            <motion.div
+              key={chip.label}
+              className={`absolute z-[35] ${chip.cls}`}
+              initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: chip.rot - 12 }}
+              animate={{ opacity: 1, scale: 1, rotate: chip.rot }}
+              transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 180, damping: 14, delay: chip.delay }}
+            >
+              <span
+                className={`flex items-center gap-1.5 rounded-full bg-gradient-to-br ${chip.tint} px-3 py-1.5 font-mono text-[10px] font-medium tracking-[0.14em] whitespace-nowrap text-ink uppercase shadow-[0_8px_18px_rgba(110,120,180,0.22)] ring-1 ring-white motion-reduce:animate-none sm:px-4 sm:py-2 sm:text-xs`}
+                style={{ animation: reduce ? undefined : `float ${6 + chip.delay}s ease-in-out infinite` }}
+              >
+                <span className="text-rose" aria-hidden="true">
+                  {chip.icon}
+                </span>
+                {chip.label}
+              </span>
+            </motion.div>
+          ))}
+
           {/* stickers */}
           <motion.div style={{ y: mid }} className="absolute inset-0 z-30">
             <Smiley className="top-[8%] right-[10%] h-14 w-14 sm:h-20 sm:w-20" rotate={12} />
@@ -160,20 +185,27 @@ export function Hero() {
           >
             <BrowserCard>
               <div className="px-6 pt-6 pb-7 sm:px-9 sm:pt-8 sm:pb-9">
-                <h1 className="font-display text-[clamp(3rem,10vw,6.4rem)] leading-[0.92] text-ink">
+                <p className="font-script text-[1.7rem] leading-none text-ink/80 sm:text-[2rem]">hi, I&apos;m {siteConfig.firstName} ✦</p>
+                <h1 className="font-display mt-3 text-[clamp(2.5rem,7.4vw,5.2rem)] leading-[0.95] text-ink">
                   <MaskedWord delay={0.7} reduce={reduce}>
-                    Hi,
+                    Social
                   </MaskedWord>{' '}
-                  <MaskedWord delay={0.78} reduce={reduce}>
-                    I&apos;m
+                  <MaskedWord delay={0.76} reduce={reduce}>
+                    Media
+                  </MaskedWord>{' '}
+                  <MaskedWord delay={0.82} reduce={reduce}>
+                    Manager
                   </MaskedWord>
                   <br />
-                  <MaskedWord delay={0.86} reduce={reduce}>
-                    <span className="text-rose">{siteConfig.firstName}</span>
+                  <MaskedWord delay={0.9} reduce={reduce}>
+                    <span className="text-rose">&amp; Video</span>
+                  </MaskedWord>{' '}
+                  <MaskedWord delay={0.96} reduce={reduce}>
+                    <span className="text-rose">Editor</span>
                   </MaskedWord>
                 </h1>
-                <p className="mt-5 font-display text-[clamp(1.25rem,2.6vw,1.75rem)] leading-tight text-ink">
-                  I make brands impossible to <span className="highlight">scroll past.</span>
+                <p className="mt-5 font-display text-[clamp(1.2rem,2.4vw,1.65rem)] leading-tight text-ink">
+                  I plan, create &amp; edit content that makes brands <span className="highlight">stand out.</span>
                 </p>
                 <p className="mt-3 max-w-lg text-[0.95rem] leading-relaxed text-muted sm:text-base">{siteConfig.heroText}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -204,7 +236,7 @@ export function Hero() {
             <div className="relative rounded-[22px] bg-paper px-6 py-7 shadow-[0_24px_50px_rgba(60,90,140,0.18)] ring-1 ring-ink/5 sm:px-8">
               <GoldStar className="-top-6 -right-4 h-12 w-12" rotate={18} float={6} />
               <p className="font-mono text-xs leading-relaxed tracking-[0.12em] text-ink uppercase sm:text-[13px]">
-                Content creator &amp; creative strategist
+                Social media manager · Video editor · Content creator
               </p>
               <span className="my-4 block h-px w-24 bg-ink/40" aria-hidden="true" />
               <ul className="space-y-1.5 font-mono text-xs tracking-[0.1em] text-ink/80 uppercase sm:text-[13px]">

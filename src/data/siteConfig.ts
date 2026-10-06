@@ -8,19 +8,15 @@
 export const siteConfig = {
   name: 'Yasal',
   firstName: 'Yasal',
-  title: 'Content Creator • UGC Creator • Social Media Creative',
-  eyebrow: 'Content Creator • UGC • Social Media',
-  headline: 'I make brands impossible to',
-  headlineAccent: 'scroll past.',
+  role: 'Social Media Manager & Video Editor',
+  tagline: 'I plan, create & edit content that makes brands stand out.',
   heroText:
-    'I turn products into stories people actually want to watch: from the first idea and the hook, to filming, styling and the final cut.',
-  disciplines: ['UGC', 'Social content', 'Creative campaigns', 'Visual storytelling'],
-  intro:
-    "I'm Yasal — a content creator and UGC creative creating aesthetic, relatable and scroll-stopping content for brands.",
-  aboutHeading: "Hi, I'm Yasal.",
+    'From the content calendar to the final cut: I manage your social presence, shape the ideas and edit them into videos people actually stop for.',
+  /** What I do, in order of focus */
+  disciplines: ['Social media management', 'Video editing', 'Content creation', 'Creative strategy'],
   about: [
-    "I'm happiest somewhere between an idea and a camera. I love building a concept from a single feeling, finding the hook that makes someone stop, and shaping it into a story that feels like it belongs on their feed.",
-    "Lately I've been experimenting with AI and new creative tools, using them to sketch ideas faster and push visuals further, while keeping the final work warm, human and a little bit personal. That's the goal with every brand: less like an ad, more like someone you'd remember.",
+    "I'm a social media manager and video editor who loves the whole journey of a post: planning the calendar, shaping the idea, and cutting the final edit so it lands in the first second.",
+    "I plan content with a reason to exist, edit with an eye for pacing, text and transitions, and keep experimenting with AI and new creative tools to push ideas further. The goal is always the same: help brands show up consistently and feel more human, memorable and worth following.",
   ],
   availability: 'Available for collaborations',
   location: '',
@@ -50,44 +46,18 @@ export const siteConfig = {
 
   /** Things I love doing — shown in About */
   aboutLoves: [
-    'Building concepts from scratch',
-    'Storytelling & hooks',
-    'Visual content',
+    'Planning content with a purpose',
+    'Editing: pacing, text & transitions',
+    'Turning briefs into creative concepts',
     'Experimenting with AI & creative tools',
     'Making brands feel human',
   ],
 
   process: [
-    {
-      num: '01',
-      title: 'Discover',
-      text: 'Understand the brand, audience and product.',
-    },
-    {
-      num: '02',
-      title: 'Concept',
-      text: 'Develop the hook, visual direction and content idea.',
-    },
-    {
-      num: '03',
-      title: 'Create',
-      text: 'Film, style, edit and refine the content.',
-    },
-    {
-      num: '04',
-      title: 'Deliver',
-      text: 'Provide polished, platform-ready content.',
-    },
+    { num: '01', title: 'Plan', text: 'Understand the brand, audience and goals, then map the content plan.' },
+    { num: '02', title: 'Concept', text: 'Hooks, formats, captions and a content calendar that fits the brand.' },
+    { num: '03', title: 'Create & edit', text: 'Shoot or source the footage, then edit with pacing, text and transitions.' },
+    { num: '04', title: 'Publish & refine', text: 'Deliver platform-ready posts and keep refining the content direction.' },
   ],
 
-  marquee: [
-    'UGC',
-    'Beauty',
-    'Lifestyle',
-    'Product films',
-    'Reels',
-    'Event reels',
-    'Campaigns',
-    'Social storytelling',
-  ],
 }

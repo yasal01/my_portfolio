@@ -98,6 +98,10 @@ export function Project() {
                 ))}
               </h1>
               <p className="mt-3 font-mono text-xs tracking-[0.16em] text-ink/60 uppercase">{project.category}</p>
+              <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-white/80 px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-ink uppercase shadow-[0_6px_14px_rgba(60,90,140,0.12)] sm:text-xs">
+                <span className="text-rose">My role</span>
+                {project.roles.join(' · ')}
+              </p>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-ink/80 sm:text-lg">{project.summary}</p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {project.tags.map((tag, index) => (

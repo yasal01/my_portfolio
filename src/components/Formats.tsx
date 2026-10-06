@@ -1,30 +1,30 @@
-import { Bot, Clapperboard, Drama, Lightbulb, Mic, PartyPopper, ShoppingBag, Sparkles } from 'lucide-react'
+import { CalendarDays, Clapperboard, LayoutGrid, Lightbulb, PenLine, Scissors, Sparkles, TrendingUp } from 'lucide-react'
 import { DropIn } from './Motion'
 import { ScrapHeading } from './ScrapHeading'
 import { GoldStar, PuffCloud } from './Stickers'
 
 const formats = [
-  { label: 'UGC videos', icon: Clapperboard, tint: '#ffd9ea' },
-  { label: 'Product films', icon: ShoppingBag, tint: '#ffe4d6' },
-  { label: 'Event reels', icon: PartyPopper, tint: '#e6dcff' },
-  { label: 'Faceless reviews', icon: Drama, tint: '#e3ebff' },
-  { label: 'Talking head', icon: Mic, tint: '#d7ebff' },
-  { label: 'AI films', icon: Bot, tint: '#ffd9ea' },
-  { label: 'Hooks & ideas', icon: Lightbulb, tint: '#ffe4d6' },
-  { label: 'Social content', icon: Sparkles, tint: '#e6dcff' },
+  { label: 'Content calendars', icon: CalendarDays, tint: '#ffd9ea' },
+  { label: 'Instagram management', icon: LayoutGrid, tint: '#ffe4d6' },
+  { label: 'Social strategy', icon: TrendingUp, tint: '#e6dcff' },
+  { label: 'Captions & hooks', icon: PenLine, tint: '#e3ebff' },
+  { label: 'Reels editing', icon: Scissors, tint: '#d7ebff' },
+  { label: 'Promo & product videos', icon: Clapperboard, tint: '#ffd9ea' },
+  { label: 'Campaign concepts', icon: Lightbulb, tint: '#ffe4d6' },
+  { label: 'Visual storytelling', icon: Sparkles, tint: '#e6dcff' },
 ]
 
 const tilts = [-3, 2, -1.5, 3, 2.5, -2, 1.5, -3]
 
-/** A sticker-sheet grid of the formats I make, in tilted white tiles. */
+/** A sticker-sheet grid of what I do (management, editing, creation), in tilted white tiles. */
 export function Formats() {
   return (
     <section className="bg-sky-dots relative overflow-hidden pt-24 pb-24 sm:pt-28 sm:pb-28">
       <PuffCloud className="top-24 -right-16 w-60" float={18} />
       <PuffCloud className="bottom-10 -left-20 w-72" float={22} delay={-5} />
       <div className="wrap relative">
-        <ScrapHeading label="What I make" tone="sun" sub="Pick a format, or mix a few. Every piece is made for the feed it lives on.">
-          Formats I <span className="highlight">love</span>
+        <ScrapHeading label="What I do" tone="sun" sub="From the content calendar to the final cut: everything your feed needs, in one place.">
+          Plan. Create. <span className="highlight">Edit.</span>
         </ScrapHeading>
 
         <div className="relative mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">

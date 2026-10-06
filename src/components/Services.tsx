@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, Check } from 'lucide-react'
+import { ArrowUpRight, CalendarDays, Check, Compass, Scissors, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { services } from '../data/services'
 import { GlossyStar } from './Decor'
@@ -9,11 +9,19 @@ import { SectionReveal } from './SectionReveal'
 
 const tabColors = ['#ffd9ea', '#e6dcff', '#d7ebff', '#e3ebff']
 
+const icons = {
+  calendar: CalendarDays,
+  scissors: Scissors,
+  sparkles: Sparkles,
+  compass: Compass,
+}
+
 /** Services as folder tabs: pick a tab, the paper-clipped card swaps. No prices — quoted on request. */
 export function Services() {
   const reduce = useReducedMotion()
   const [active, setActive] = useState(0)
   const service = services[active]
+  const Icon = icons[service.icon]
 
   return (
     <section id="services" className="bg-pink-cream relative scroll-mt-20 overflow-hidden pt-10 pb-28 sm:pb-36">
@@ -21,8 +29,8 @@ export function Services() {
       <PuffCloud className="bottom-10 -left-16 w-72" float={24} delay={-6} />
 
       <div className="wrap relative">
-        <ScrapHeading label="Services" tone="sky" sub="Choose a focused project or build an ongoing content rhythm. Every brief is quoted on its own.">
-          What we can <span className="highlight">make</span>
+        <ScrapHeading label="Services" tone="sky" sub="Manage your socials, create the content and edit it: one person, one consistent feed. Every brief is quoted on its own.">
+          How I can <span className="highlight">help</span>
         </ScrapHeading>
 
         <SectionReveal className="relative mx-auto mt-14 max-w-3xl">
@@ -63,7 +71,10 @@ export function Services() {
                 exit={reduce ? { opacity: 0 } : { opacity: 0, x: -24, rotate: -1 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               >
-                <h3 className="font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-none">
+                <h3 className="font-display flex items-center gap-3 text-[clamp(1.8rem,5vw,2.8rem)] leading-none">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f3eeff] text-ink ring-1 ring-ink/5">
+                    <Icon size={22} strokeWidth={1.7} />
+                  </span>
                   <span className="highlight">{service.title}</span>
                 </h3>
                 <span className="mt-5 block h-px w-full bg-ink/10" aria-hidden="true" />

@@ -22,6 +22,7 @@ export function Footer() {
         </div>
 
         <p className="font-display mt-8 text-3xl">{siteConfig.name}</p>
+        <p className="mt-1 font-mono text-[11px] tracking-[0.16em] text-ink/70 uppercase">{siteConfig.role}</p>
         <p className="mt-2 font-mono text-[11px] tracking-[0.16em] text-ink/60 uppercase">
           Made with ideas, good light &amp; a lot of retakes.
         </p>

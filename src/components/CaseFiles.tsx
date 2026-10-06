@@ -49,6 +49,9 @@ export function CaseFiles() {
                         <span className="font-script text-xl text-ink/50">({projectNumber(project)})</span>
                       </div>
                       <h3 className="font-display mt-2 text-[clamp(1.6rem,4vw,2.4rem)] leading-none text-rose">{project.title}</h3>
+                      <p className="mt-2 font-mono text-[10px] tracking-[0.14em] text-ink/60 uppercase sm:text-[11px]">
+                        My role · {project.roles.join(' · ')}
+                      </p>
                     </div>
                     <FactCard facts={project.facts} className="hidden w-64 shrink-0 md:grid" />
                     <span

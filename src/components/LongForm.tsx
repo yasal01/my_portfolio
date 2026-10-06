@@ -7,7 +7,7 @@ import { SectionReveal } from './SectionReveal'
 import { ChromeStar, PuffCloud, Smiley } from './Stickers'
 import { VideoCard } from './VideoCard'
 
-const notes = ['Room for the whole story', 'Made for YouTube, ads & websites', 'Cinematic, never chaotic']
+const notes = ['Paced for watch time', 'Made for YouTube, ads & websites', 'Cinematic, never chaotic']
 
 function LongProject({ project, index }: { project: Project; index: number }) {
   return (
@@ -31,6 +31,9 @@ function LongProject({ project, index }: { project: Project; index: number }) {
       </DropIn>
       <div className="mx-auto max-w-sm">
         <NameTape className="relative z-10 -mt-4">{project.title}</NameTape>
+        <p className="mt-3 text-center font-mono text-[10px] leading-relaxed tracking-[0.14em] text-ink/70 uppercase sm:text-[11px]">
+          <span className="text-rose">My role ·</span> {project.roles.join(' · ')}
+        </p>
         <FactCard facts={project.facts} className="mt-4" />
         <div className="mt-5 flex justify-center">
           <Link
@@ -59,12 +62,12 @@ export function LongForm() {
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <SectionReveal className="lg:col-span-7">
             <div className="rounded-[26px] bg-paper p-7 shadow-[0_24px_50px_rgba(60,90,140,0.16)] ring-1 ring-ink/5 sm:p-10">
-              <Chip tone="pink">Long-form</Chip>
+              <Chip tone="pink">Video editing · Long-form</Chip>
               <h2 className="font-display mt-4 text-[clamp(2.4rem,6.5vw,4.6rem)] leading-[0.95]">
                 Stories with room to <span className="highlight">breathe</span>
               </h2>
               <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-muted sm:text-base">
-                Horizontal, cinematic pieces for when the story needs more than fifteen seconds: reviews, brand films and whole worlds.
+                Horizontal edits for when the story needs more time: product reviews, promotional pieces and brand films, paced and cut for the screen they play on.
               </p>
             </div>
           </SectionReveal>

@@ -8,27 +8,33 @@
 
 export const services = [
   {
-    title: 'UGC & Video Content',
-    text: 'Short-form videos designed for social media: hooks, product moments and talking-to-camera content that feels real.',
-    includes: ['Concept & hook ideas', 'Filming & product styling', 'Edited, platform-ready cuts', 'Captions & on-screen text'],
-    icon: 'clapperboard',
+    title: 'Social Media Management',
+    text: 'Strategy, planning, content calendars and social content direction, so your page stays consistent and on-brand.',
+    includes: [
+      'Content planning & calendars',
+      'Social media strategy',
+      'Instagram management',
+      'Content ideas & captions',
+      'Page growth & content direction',
+    ],
+    icon: 'calendar',
   },
   {
-    title: 'Creative Content',
-    text: 'Concepts, visuals and content ideas for brands, from a single hero clip to a full set of social assets.',
-    includes: ['Content ideas & moodboards', 'Visual direction', 'Product & lifestyle visuals', 'AI-assisted concepts'],
+    title: 'Video Editing',
+    text: 'Reels, short-form content, promotional edits and branded videos, cut for the platform they live on.',
+    includes: ['Reels & short-form videos', 'Promotional & product videos', 'Transitions, text & effects', 'Pacing & storytelling'],
+    icon: 'scissors',
+  },
+  {
+    title: 'Content Creation',
+    text: 'Creative concepts, social posts, campaigns and visual storytelling that give your feed something to say.',
+    includes: ['Creative concepts', 'Social media posts', 'Campaign ideas', 'Branded content', 'UGC-style videos, when needed'],
     icon: 'sparkles',
   },
   {
     title: 'Creative Strategy',
-    text: 'Content direction, campaign concepts and social storytelling, so every post has a reason to exist.',
-    includes: ['Content direction', 'Campaign concepts', 'Social storytelling', 'Posting rhythm ideas'],
+    text: 'Content direction and ideas designed around the brand, so every post has a reason to exist.',
+    includes: ['Content direction', 'Brand-led ideas', 'Campaign concepts', 'Visual direction'],
     icon: 'compass',
-  },
-  {
-    title: 'Custom Projects',
-    text: 'For brands looking for something specific. Events, launches, experiments: tell me the idea and we’ll shape it together.',
-    includes: ['Events & launches', 'Experimental formats', 'Full brand worlds', 'Your idea, shaped together'],
-    icon: 'wand',
   },
 ] as const

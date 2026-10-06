@@ -29,6 +29,8 @@ export type Project = {
   category: string
   /** Short chip shown on cards, e.g. "Beauty" */
   chip: string
+  /** My role on this project, shown as a line on every card (only what I actually did) */
+  roles: string[]
   summary: string
   idea: string
   /** What the content set out to communicate — an intention, never a claimed result */
@@ -49,18 +51,19 @@ export const projects: Project[] = [
   {
     slug: 'soft-glow-oil',
     title: 'Soft Glow Oil',
-    category: 'Haircare / UGC / Product',
+    category: 'Haircare · Social content',
     chip: 'Haircare',
-    summary: 'A haircare story told three ways: a hair-first UGC reveal, a glowing product film, and a hands-on unboxing.',
-    idea: 'Lead with the result, then the reason. The UGC reel opens on the hair itself (length, shine, movement) before revealing the bottle behind it, with “the hair vs the product I use” doing the hook. A warm product film and a tactile unboxing round out the set, so the brand gets a hero clip, a proof point and a how-to.',
+    roles: ['Social media content', 'Video editing', 'Creative direction'],
+    summary: 'A haircare content set planned and edited as one social story: a hair-first reveal reel, a glowing product film and a hands-on unboxing.',
+    idea: 'Lead with the result, then the reason. The reveal reel opens on the hair itself (length, shine, movement) before revealing the bottle behind it, with “the hair vs the product I use” doing the hook. A warm product film and a tactile unboxing round out the set, so the brand gets a hero clip, a proof point and a how-to.',
     goal: 'Make the oil feel like a believable ritual: show the hair first so the product earns its moment, and give the brand content for both organic posts and ads.',
-    tags: ['UGC', 'Haircare', 'Product film', 'Unboxing'],
-    role: ['Concept & hook', 'On-camera talent', 'Product styling', 'Filming', 'Editing'],
-    contentCreated: ['Hair reveal UGC reel', 'Cinematic product film', 'Unboxing & application clip', 'Organic social cuts'],
+    tags: ['Reels', 'Product film', 'Haircare', 'Editing'],
+    role: ['Creative direction', 'Concept & hooks', 'Video editing', 'Filming', 'Product styling', 'On camera for the reveal'],
+    contentCreated: ['Hair reveal reel', 'Cinematic product film', 'Unboxing & application clip', 'Social cut-downs'],
     facts: [
       { label: 'Format', value: '9:16' },
       { label: 'Clips', value: '3' },
-      { label: 'Role', value: 'UGC' },
+      { label: 'Role', value: 'Edit + direct' },
     ],
     format: 'short',
     cover: {
@@ -90,8 +93,9 @@ export const projects: Project[] = [
   {
     slug: 'lip-gloss-workshop',
     title: 'Lip Gloss Workshop',
-    category: 'Event / Experience Reel',
+    category: 'Event · Social content',
     chip: 'Event',
+    roles: ['Event content', 'Video editing', 'Captions & styling'],
     summary: 'A cosy café workshop turned into a reel that makes you wish you’d been there.',
     idea: 'Event content lives or dies on atmosphere. I captured the room first (the long table, the recipe cards, the jars of glitter and charms), then the small moments: mixing shades, the “Draw Yourself” wall, a final swatch, and the café cat stealing the ending. Soft pink captions keep it playful and on-theme.',
     goal: 'Capture the mood of the day so the people who missed it want to be at the next one.',
@@ -115,26 +119,27 @@ export const projects: Project[] = [
   },
   {
     slug: 'beauty-ugc',
-    title: 'Beauty UGC',
-    category: 'Beauty / Makeup / Lifestyle',
+    title: 'Beauty Reels',
+    category: 'Beauty · Short-form',
     chip: 'Beauty',
-    summary: 'Relatable get-ready and lifestyle beauty content that still looks editorial.',
-    idea: 'Beauty that feels lived-in. Talking to camera, texture close-ups, and everyday makeup moments styled so they stop the scroll without losing honesty.',
+    roles: ['Video editing', 'Product content', 'Social content'],
+    summary: 'Get-ready and product moments cut into short-form beauty content that feels relatable and still looks editorial.',
+    idea: 'Beauty that feels lived-in. Texture close-ups, product moments and everyday makeup, edited with quick pacing so they stop the scroll without losing honesty.',
     goal: 'Show makeup in a way that feels honest and everyday, while still looking polished enough to stop the scroll.',
-    tags: ['Beauty', 'Talking head', 'Get ready', 'Reels'],
-    role: ['Content creation', 'Creative direction', 'UGC', 'Product styling', 'Editing'],
-    contentCreated: ['UGC videos', 'Short-form reels', 'Social media assets'],
+    tags: ['Beauty', 'Reels', 'Product', 'Editing'],
+    role: ['Creative direction', 'Video editing', 'Product styling', 'Social content'],
+    contentCreated: ['Short-form reels', 'Product moments', 'Social media assets'],
     facts: [
       { label: 'Format', value: '9:16' },
-      { label: 'Style', value: 'Talking' },
-      { label: 'Role', value: 'UGC' },
+      { label: 'Style', value: 'Reels' },
+      { label: 'Role', value: 'Edit' },
     ],
     format: 'short',
     cover: {
       type: 'video',
       src: '/media/beauty-ugc.mp4',
       poster: '/media/beauty-ugc-poster.jpg',
-      alt: 'Talk-to-camera beauty UGC video',
+      alt: 'Short-form beauty video with product close-ups',
     },
     gallery: [],
     accent: 'pink',
@@ -142,13 +147,14 @@ export const projects: Project[] = [
   {
     slug: 'faceless-review',
     title: 'Faceless Product Review',
-    category: 'Beauty / Talking-head UGC',
+    category: 'Product review · Video',
     chip: 'Skincare',
-    summary: 'A talk-to-camera review where the product, the hands and the voice do the work. No face required.',
-    idea: 'Not every creator wants to be on camera, and not every brand needs a face. A playful flower cover-up keeps the identity private while the framing stays on what matters: holding the bottle, showing it up close, and talking it through like a friend would. Shot horizontally so it works for YouTube, ads and website embeds.',
+    roles: ['Scripting', 'Video editing', 'Product content'],
+    summary: 'A product review where the product, the hands and the voice do the work. Scripted, filmed and edited horizontally for YouTube, ads and websites.',
+    idea: 'Not every brand needs a face on camera. A playful flower cover-up keeps the identity private while the framing stays on what matters: holding the bottle, showing it up close, and talking it through like a friend would. Shot horizontally so it works for YouTube, ads and website embeds.',
     goal: 'Show that a review can feel personal without showing a face, keeping every second of attention on the product and the voice.',
-    tags: ['Faceless UGC', 'Talking head', 'Skincare', 'Horizontal'],
-    role: ['Scripting', 'On-camera talent', 'Filming', 'Editing'],
+    tags: ['Product review', 'Skincare', 'Horizontal', 'Editing'],
+    role: ['Scripting', 'Filming', 'Video editing', 'On-camera hands & voice'],
     contentCreated: ['Horizontal review video', 'Ad-ready product talk', 'Website & YouTube cut'],
     facts: [
       { label: 'Format', value: '16:9' },
@@ -160,7 +166,7 @@ export const projects: Project[] = [
       type: 'video',
       src: '/media/faceless-review.mp4',
       poster: '/media/faceless-review-poster.jpg',
-      alt: 'Creator with a flower covering their face talking about a skincare bottle',
+      alt: 'A product review with a flower covering the face, holding a skincare bottle',
       orientation: 'horizontal',
     },
     gallery: [],
@@ -171,6 +177,7 @@ export const projects: Project[] = [
     title: 'NOIREL',
     category: 'Fashion / AI Film / Web Design',
     chip: 'Fashion',
+    roles: ['Visual direction', 'Video editing', 'AI film'],
     summary: 'A cinematic brand world for a fictional black-on-black fashion label, built around my own AI-generated film.',
     idea: 'NOIREL makes clothing for the in-between hours: sharp tailoring, fluid layers and black-on-black pieces. I built the whole world in charcoal, graphite and silver, with brutalist architecture, slow camera moves and a scroll-driven website, so the label feels like a mood before it feels like a product.',
     goal: 'Create a complete fashion label from nothing (name, palette, film and website) to show how AI tools and editorial direction can work together.',
