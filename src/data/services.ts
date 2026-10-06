@@ -1,34 +1,34 @@
 /**
  * ============================================================
  * SERVICES
- * Edit titles and descriptions here.
+ * Edit titles and descriptions here. No prices on purpose —
+ * every project is quoted on request.
  * ============================================================
  */
 
 export const services = [
   {
-    title: 'UGC Content',
-    text: 'Authentic product demonstrations, testimonials, lifestyle videos and talking-to-camera content.',
-    icon: 'sparkles',
-  },
-  {
-    title: 'Short-Form Video',
-    text: 'Instagram Reels, TikTok videos, hooks, product storytelling and trend-inspired content.',
+    title: 'UGC & Video Content',
+    text: 'Short-form videos designed for social media: hooks, product moments and talking-to-camera content that feels real.',
+    includes: ['Concept & hook ideas', 'Filming & product styling', 'Edited, platform-ready cuts', 'Captions & on-screen text'],
     icon: 'clapperboard',
   },
   {
-    title: 'Product Content',
-    text: 'Aesthetic product photography, cinematic product videos and creative product showcases.',
-    icon: 'package',
+    title: 'Creative Content',
+    text: 'Concepts, visuals and content ideas for brands, from a single hero clip to a full set of social assets.',
+    includes: ['Content ideas & moodboards', 'Visual direction', 'Product & lifestyle visuals', 'AI-assisted concepts'],
+    icon: 'sparkles',
   },
   {
-    title: 'AI Creative Content',
-    text: 'AI-assisted product visuals, creative concepts and campaign scenes.',
+    title: 'Creative Strategy',
+    text: 'Content direction, campaign concepts and social storytelling, so every post has a reason to exist.',
+    includes: ['Content direction', 'Campaign concepts', 'Social storytelling', 'Posting rhythm ideas'],
+    icon: 'compass',
+  },
+  {
+    title: 'Custom Projects',
+    text: 'For brands looking for something specific. Events, launches, experiments: tell me the idea and we’ll shape it together.',
+    includes: ['Events & launches', 'Experimental formats', 'Full brand worlds', 'Your idea, shaped together'],
     icon: 'wand',
-  },
-  {
-    title: 'Social Media Content',
-    text: 'Scroll-stopping visuals and content concepts designed for social platforms.',
-    icon: 'share',
   },
 ] as const

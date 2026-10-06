@@ -4,6 +4,8 @@
   --font-serif: 'Urbanist', 'Inter', system-ui, sans-serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-script: 'Caveat', cursive;
+  --font-display: 'Archivo', 'Urbanist', system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
 
   --color-ivory: #ffffff;
   --color-cream: #fbebea;
@@ -13,13 +15,24 @@
   --color-lavender: #e3e3ff;
   --color-lime: #e9fac0;
   --color-sky: #e3f2ff;
-  --color-mint: #dbf5f0;
+  --color-mint: #e3ebff;
   --color-yellow: #ffe7a9;
   --color-nude: #ffe3fb;
   --color-brown: #5c5c5c;
   --color-ink: #1d1d1d;
   --color-muted: #5c5c5c;
   --color-line: #ececec;
+
+  /* Scrapbook palette */
+  --color-skyblue: #cfe5ff;
+  --color-skydeep: #8fc4f7;
+  --color-bubble: #f9c6df;
+  --color-bubbledeep: #f2a3c8;
+  --color-sun: #ffe0cf;
+  --color-highlight: #ddd0ff;
+  --color-paper: #fffdf8;
+  --color-kraft: #e6c398;
+  --color-rose: #c96a8c;
 }
 
 html {
@@ -68,9 +81,160 @@ body {
   font-family: var(--font-script);
 }
 
+/* Heavy italic display type */
+.font-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+/* Yellow highlighter swipe behind a word */
+.highlight {
+  background: linear-gradient(transparent 52%, var(--color-highlight) 52%, var(--color-highlight) 92%, transparent 92%);
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/*
+ * Pastel section washes. Each one starts on the colour the previous section ends on,
+ * so the page flows sky → lavender → pink → peach-cream → lavender → pink without seams.
+ *   sky #cfe5ff · lavender #e9e1fd · pink #fbe2ed · cream #fff5ee
+ */
+.bg-sky-dots,
+.bg-sky-lav,
+.bg-lav-pink,
+.bg-pink-cream,
+.bg-cream-lav,
+.bg-pink-lav {
+  background-size: 22px 22px, 100% 100%;
+}
+
+.bg-sky-dots {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.6) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #cfe5ff 0%, #dbecff 50%, #cfe5ff 100%);
+}
+
+.bg-sky-lav {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.55) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #cfe5ff 0%, #dcdffe 50%, #e9e1fd 100%);
+}
+
+.bg-lav-pink {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.7) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #e9e1fd 0%, #f3e1f6 50%, #fbe2ed 100%);
+}
+
+.bg-pink-cream {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.75) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #fbe2ed 0%, #feeceb 50%, #fff5ee 100%);
+}
+
+.bg-cream-lav {
+  background-image:
+    radial-gradient(rgb(214 200 250 / 0.45) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #fff5ee 0%, #f5ebf8 50%, #e9e1fd 100%);
+}
+
+.bg-pink-lav {
+  background-image:
+    radial-gradient(rgb(255 255 255 / 0.7) 1.4px, transparent 1.6px),
+    linear-gradient(180deg, #e9e1fd 0%, #f6e2f3 50%, #fbe2ed 100%);
+}
+
+/* Lined notebook paper with a pink margin */
+.paper-lined {
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(90deg, transparent 38px, rgb(214 160 200 / 0.7) 38px, rgb(214 160 200 / 0.7) 40px, transparent 40px),
+    repeating-linear-gradient(180deg, transparent 0 27px, rgb(143 196 247 / 0.45) 27px 28px);
+}
+
 img,
 video {
   max-width: 100%;
+}
+
+/* ---------- Dreamy atmosphere ---------- */
+
+/* Soft film grain over the whole page; sits above content but never blocks clicks. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Pastel wash: pink, lavender and sky melting into cream. */
+.bg-dreamy {
+  background:
+    radial-gradient(60% 55% at 12% 18%, rgb(255 227 251 / 0.95), transparent 70%),
+    radial-gradient(55% 50% at 88% 12%, rgb(227 227 255 / 0.95), transparent 70%),
+    radial-gradient(60% 60% at 75% 92%, rgb(227 242 255 / 0.95), transparent 70%),
+    radial-gradient(50% 50% at 20% 95%, rgb(251 235 234 / 0.9), transparent 70%),
+    #fffaf8;
+}
+
+/* Frosted glass card with a delicate light border. */
+.glass {
+  background: linear-gradient(140deg, rgb(255 255 255 / 0.72), rgb(255 255 255 / 0.38));
+  border: 1px solid rgb(255 255 255 / 0.75);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.8) inset,
+    0 18px 50px rgb(120 90 140 / 0.1);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(var(--float-rotate, 0deg));
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(calc(var(--float-rotate, 0deg) + 4deg));
+  }
+}
+
+/* Character sway: a gentle side-to-side rock from the feet */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(-1.2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(1.2deg) translateY(-8px);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.75) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(20deg);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(28px, -10px, 0);
+  }
 }
 
 /* Text link with an underline that draws in on hover (also when hovering the parent .group/link) */

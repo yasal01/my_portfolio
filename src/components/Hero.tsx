@@ -1,39 +1,20 @@
-import { ArrowRight } from 'lucide-react'
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from 'framer-motion'
-import { useRef, useSyncExternalStore, type PointerEvent, type ReactNode } from 'react'
-import { getProject, projects, type Project, type ProjectMedia } from '../data/projects'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { ArrowUpRight } from 'lucide-react'
+import { useRef, type ReactNode } from 'react'
+import { getProject, projects } from '../data/projects'
 import { siteConfig } from '../data/siteConfig'
+import { Sparkle } from './Decor'
+import { PhoneFrame } from './MediaFrames'
+import { BrowserCard } from './Paper'
+import { BubbleWord, ChromeStar, Disc, Doodle, DotPatch, GoldStar, PuffCloud, Smiley, SparkLines } from './Stickers'
 import { VideoCard } from './VideoCard'
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-const desktopQuery = '(min-width: 1024px)'
-
-/** Scroll depth only on large screens; on phones the stacked layout has no room for it. */
-function useIsDesktop() {
-  return useSyncExternalStore(
-    (onChange) => {
-      const media = window.matchMedia(desktopQuery)
-      media.addEventListener('change', onChange)
-      return () => media.removeEventListener('change', onChange)
-    },
-    () => window.matchMedia(desktopQuery).matches,
-    () => false,
-  )
-}
-
 /** A word that rises out of a mask. */
 function MaskedWord({ children, delay, reduce }: { children: ReactNode; delay: number; reduce: boolean | null }) {
   return (
-    <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-top">
+    <span className="-mb-[0.14em] inline-block overflow-hidden pb-[0.14em] align-top">
       <motion.span
         className="inline-block"
         initial={reduce ? false : { y: '110%' }}
@@ -46,275 +27,221 @@ function MaskedWord({ children, delay, reduce }: { children: ReactNode; delay: n
   )
 }
 
-/** A small framed clip that floats around the main hero video. */
-function FloatingClip({
-  media,
-  accent,
-  label,
-  className,
-  scrollY,
-  x,
-  y,
-  rotate,
-  delay,
-  reduce,
-}: {
-  media: ProjectMedia
-  accent: Project['accent']
-  label: string
-  className: string
-  scrollY: MotionValue<number> | number
-  x: MotionValue<number>
-  y: MotionValue<number>
-  rotate: number
-  delay: number
-  reduce: boolean | null
-}) {
-  return (
-    <motion.div style={{ y: scrollY }} className={`absolute z-20 ${className}`}>
-      <motion.div
-        style={{ x, y, rotate }}
-        initial={reduce ? false : { opacity: 0, scale: 0.88 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.9, delay, ease }}
-        className="rounded-[18px] bg-ivory p-1.5 shadow-[0_22px_50px_rgba(29,29,29,0.14)] sm:rounded-[22px]"
-      >
-        <div className="aspect-[9/16] overflow-hidden rounded-[13px] sm:rounded-[16px]">
-          <VideoCard media={media} accent={accent} overlay={false} autoPlay autoPlayOnHover={false} />
-        </div>
-        <p className="px-1.5 pt-1.5 pb-0.5 text-[8px] font-semibold tracking-[0.12em] whitespace-nowrap text-muted uppercase sm:text-[10px] sm:tracking-[0.18em]">
-          {label}
-        </p>
-      </motion.div>
-    </motion.div>
-  )
-}
-
 export function Hero() {
   const reduce = useReducedMotion()
-  const isDesktop = useIsDesktop()
-  const depth = isDesktop && !reduce
   const ref = useRef<HTMLElement>(null)
-
   const lead = projects[0]
   const workshop = getProject('lip-gloss-workshop')
-  const productFilm = lead.gallery[0]
 
-  // Depth on scroll: the three clips drift at different speeds as the hero leaves.
+  // The collage comes apart a little as you scroll: each layer at its own speed.
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const mainScroll = useTransform(scrollYProgress, [0, 1], [0, 70])
-  const backScroll = useTransform(scrollYProgress, [0, 1], [0, -50])
-  const frontScroll = useTransform(scrollYProgress, [0, 1], [0, 140])
+  const slow = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 60])
+  const mid = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -90])
+  const fast = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 180])
+  const spin = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 140])
 
-  // Depth on pointer (mouse only): layers shift a few pixels in opposite directions.
-  const pointerX = useMotionValue(0)
-  const pointerY = useMotionValue(0)
-  const smoothX = useSpring(pointerX, { stiffness: 60, damping: 18 })
-  const smoothY = useSpring(pointerY, { stiffness: 60, damping: 18 })
-  const mainX = useTransform(smoothX, (v) => v * 8)
-  const mainY = useTransform(smoothY, (v) => v * 8)
-  const backX = useTransform(smoothX, (v) => v * -16)
-  const backY = useTransform(smoothY, (v) => v * -16)
-  const frontX = useTransform(smoothX, (v) => v * 22)
-  const frontY = useTransform(smoothY, (v) => v * 22)
-
-  function onPointerMove(event: PointerEvent<HTMLElement>) {
-    if (reduce || event.pointerType !== 'mouse') return
-    const rect = event.currentTarget.getBoundingClientRect()
-    pointerX.set((event.clientX - rect.left) / rect.width - 0.5)
-    pointerY.set((event.clientY - rect.top) / rect.height - 0.5)
-  }
-
-  function onPointerLeave() {
-    pointerX.set(0)
-    pointerY.set(0)
-  }
-
-  const fade = (delay: number) =>
+  const pop = (delay: number, rotate = 0) =>
     reduce
-      ? {}
+      ? { style: { rotate } }
       : {
-          initial: { opacity: 0, y: 18 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.7, delay, ease },
+          initial: { opacity: 0, scale: 0.7, rotate: rotate - 14 },
+          animate: { opacity: 1, scale: 1, rotate },
+          transition: { type: 'spring' as const, stiffness: 170, damping: 15, delay },
         }
 
-  const words = siteConfig.headline.split(' ')
-  const accentWords = siteConfig.headlineAccent.split(' ')
-
   return (
-    <section ref={ref} className="relative overflow-x-clip bg-blush" onPointerMove={onPointerMove} onPointerLeave={onPointerLeave}>
-      <div className="wrap grid items-center gap-12 pt-8 pb-6 sm:pt-12 lg:min-h-[calc(100svh-160px)] lg:grid-cols-12 lg:gap-10 lg:py-10">
-        <div className="min-w-0 lg:col-span-7">
-          <motion.p
-            className="inline-flex items-center gap-2 rounded-full bg-ivory/70 px-3 py-1.5 text-[10px] font-semibold tracking-[0.16em] text-ink/70 uppercase sm:text-[11px]"
-            {...fade(0.02)}
-          >
-            <span className="relative flex h-2 w-2" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ink/30 motion-reduce:animate-none" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-ink" />
-            </span>
-            {siteConfig.availability}
-          </motion.p>
+    <section ref={ref} className="bg-sky-dots relative -mt-[86px] overflow-hidden pt-[86px]">
+      {/* Sky layer */}
+      <motion.div style={{ y: slow }} className="pointer-events-none absolute inset-0">
+        <PuffCloud className="top-[12%] -left-16 w-64 sm:w-80" float={16} />
+        <PuffCloud className="top-[6%] right-[-40px] w-56 sm:w-72" float={20} delay={-6} />
+        <PuffCloud className="top-[46%] left-[38%] hidden w-60 lg:block" float={18} delay={-3} />
+        <DotPatch className="top-[22%] left-[6%] h-28 w-28" />
+        <DotPatch className="top-[58%] right-[4%] h-24 w-32" />
+        <Sparkle className="top-[18%] left-[30%] h-4 w-4" tone="white" delay={0.2} />
+        <Sparkle className="top-[36%] right-[24%] h-5 w-5" tone="white" delay={1.1} />
+        <Sparkle className="top-[64%] left-[12%] h-3 w-3" tone="white" delay={1.8} />
+      </motion.div>
 
-          <motion.div className="mt-7 flex items-center gap-3 sm:mt-9" {...fade(0.08)}>
-            {siteConfig.portrait ? (
-              <img
-                src={siteConfig.portrait}
-                alt=""
-                className="h-11 w-11 shrink-0 rounded-full object-cover outline-3 outline-white/80 sm:h-12 sm:w-12"
-              />
-            ) : null}
-            <p className="leading-tight">
-              <span className="font-script text-[1.55rem] text-ink sm:text-[1.7rem]">Hello! I&apos;m {siteConfig.firstName},</span>
-              <br />
-              <span className="text-sm text-muted">content creator &amp; UGC creative</span>
-            </p>
-          </motion.div>
+      <div className="wrap relative">
+        {/* Collage: my full photo (cut out) with my videos in phones and stickers around it */}
+        <div className="relative mx-auto h-[600px] max-w-[980px] sm:h-[700px] lg:h-[780px]">
+          <Doodle className="top-[30%] left-[-4%] hidden h-28 w-[46%] rotate-[-8deg] sm:block" />
+          <Doodle className="right-[-2%] bottom-[18%] hidden h-24 w-[40%] rotate-[160deg] sm:block" />
 
-          <h1 className="mt-5 font-serif text-[clamp(2.35rem,7.2vw,6.1rem)] leading-[0.95] font-extrabold tracking-[-0.035em] sm:mt-6">
-            {words.map((word, index) => (
-              <span key={`${word}-${index}`}>
-                <MaskedWord delay={0.14 + index * 0.06} reduce={reduce}>
-                  {word}
-                </MaskedWord>{' '}
-              </span>
-            ))}
-            <span className="relative inline-block whitespace-nowrap">
-              {accentWords.map((word, index) => (
-                <span key={`${word}-${index}`}>
-                  {index > 0 ? ' ' : null}
-                  <MaskedWord delay={0.14 + (words.length + index) * 0.06} reduce={reduce}>
-                    {word}
-                  </MaskedWord>
-                </span>
-              ))}
-              <svg
-                viewBox="0 0 300 20"
-                preserveAspectRatio="none"
-                className="absolute -bottom-[0.1em] left-0 h-[0.2em] w-full text-ink"
-                aria-hidden="true"
-              >
-                <motion.path
-                  d="M3 13 C 60 5, 120 3, 170 9 S 262 17, 297 6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  vectorEffect="non-scaling-stroke"
-                  initial={reduce ? false : { pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.1, delay: 0.95, ease }}
-                />
-              </svg>
-            </span>
-          </h1>
-
-          <motion.p
-            className="mt-7 max-w-md text-[0.95rem] leading-relaxed text-pretty text-muted sm:mt-8 sm:text-base md:text-lg"
-            {...fade(0.5)}
-          >
-            {siteConfig.heroText}
-          </motion.p>
-
-          <motion.div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4 sm:mt-10" {...fade(0.6)}>
-            <a
-              href="#work"
-              className="group/cta inline-flex items-center gap-4 rounded-full bg-ink py-2 pr-2 pl-6 text-sm font-semibold text-ivory transition-transform duration-300 hover:-translate-y-0.5"
-            >
-              Explore My Work
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ivory text-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/cta:rotate-90">
-                <ArrowRight size={16} />
-              </span>
-            </a>
-            <a href="#contact" className="group/link text-sm font-semibold">
-              <span className="link-underline">Let&apos;s collaborate</span>
-            </a>
-          </motion.div>
-        </div>
-
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[340px] min-[400px]:max-w-[380px] sm:max-w-[440px] lg:col-span-5 lg:max-w-[500px]">
-          <motion.div
-            className="absolute inset-[4%] rounded-[2.5rem]"
-            style={{
-              backgroundImage:
-                'linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)',
-              backgroundSize: '42px 42px',
-            }}
-            aria-hidden="true"
-            {...fade(0.1)}
-          />
-
-          <motion.div style={{ y: depth ? mainScroll : 0 }} className="absolute inset-0 z-10 flex items-center justify-center">
+          {/* my character: my real face on the Bitmoji-style body, at the body's own face scale */}
+          <motion.div style={{ y: mid }} className="absolute inset-x-0 bottom-[0%] z-10 flex justify-center">
             <motion.div
-              style={{ x: mainX, y: mainY }}
-              initial={reduce ? false : { opacity: 0, scale: 0.94 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.1, delay: 0.2, ease }}
-              className="aspect-[9/16] w-[58%] overflow-hidden rounded-t-[999px] rounded-b-[2.5rem] bg-pink shadow-[0_24px_60px_rgba(29,29,29,0.12)]"
+              className="relative h-[560px] -translate-x-[6%] sm:h-[660px] lg:h-[740px] lg:-translate-x-[10%]"
+              initial={reduce ? false : { scale: 0.3, y: 160, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 75, damping: 13, mass: 0.9, delay: 0.1 }}
+              style={{ transformOrigin: '50% 30%' }}
             >
-              <VideoCard media={lead.cover} accent={lead.accent} autoPlay autoPlayOnHover={false} overlay={false} />
+              {/* glossy pastel halo behind the head */}
+              <span
+                className="absolute top-[-6%] left-1/2 aspect-square w-[130%] -translate-x-1/2 rounded-full opacity-90 ring-[10px] ring-white/50"
+                style={{
+                  background:
+                    'radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 32%), radial-gradient(circle, #fde3f0 0%, #e7defd 55%, rgba(207,229,255,0) 72%)',
+                }}
+                aria-hidden="true"
+              />
+              <span
+                className="relative block h-full origin-[50%_100%] motion-reduce:animate-none"
+                style={{ animation: reduce ? undefined : 'sway 5s ease-in-out 1.4s infinite' }}
+              >
+                <img
+                  src="/media/yasal-character.webp"
+                  alt={`${siteConfig.name} as a character: my face, in a pinstripe top and wide-leg jeans`}
+                  className="h-full w-auto max-w-none select-none"
+                  style={{
+                    filter:
+                      'drop-shadow(3px 0 0 #fff) drop-shadow(-3px 0 0 #fff) drop-shadow(0 3px 0 #fff) drop-shadow(0 -3px 0 #fff) drop-shadow(0 24px 30px rgba(110,120,180,0.28))',
+                  }}
+                  draggable={false}
+                />
+              </span>
             </motion.div>
           </motion.div>
 
+          {/* clouds at the character's feet */}
+          <div className="pointer-events-none absolute inset-x-[-6%] bottom-[-4%] z-[25] h-[22%]" aria-hidden="true">
+            <PuffCloud className="bottom-0 left-[18%] w-[38%] min-w-[180px]" float={12} />
+            <PuffCloud className="bottom-[-8%] left-[42%] w-[34%] min-w-[160px]" float={15} delay={-4} />
+          </div>
+
+          {/* lead clip in a phone */}
+          <motion.div
+            style={{ y: fast }}
+            className="absolute top-[10%] left-1/2 z-20 w-[26%] max-w-[200px] translate-x-[95%] sm:top-[16%] sm:w-[24%] sm:translate-x-[70%]"
+          >
+            <motion.div {...pop(0.35, 7)}>
+              <PhoneFrame>
+                <VideoCard media={lead.cover} accent={lead.accent} overlay={false} autoPlay autoPlayOnHover={false} />
+              </PhoneFrame>
+            </motion.div>
+          </motion.div>
+
+          {/* second clip peeking from behind */}
           {workshop ? (
-            <FloatingClip
-              media={workshop.cover}
-              accent={workshop.accent}
-              label="Event reel"
-              className="top-[3%] left-0 w-[28%]"
-              scrollY={depth ? backScroll : 0}
-              x={backX}
-              y={backY}
-              rotate={-7}
-              delay={0.55}
-              reduce={reduce}
-            />
-          ) : null}
-          {productFilm ? (
-            <FloatingClip
-              media={productFilm}
-              accent={lead.accent}
-              label="Product film"
-              className="right-0 bottom-[6%] w-[28%]"
-              scrollY={depth ? frontScroll : 0}
-              x={frontX}
-              y={frontY}
-              rotate={6}
-              delay={0.7}
-              reduce={reduce}
-            />
+            <motion.div style={{ y: slow }} className="absolute top-[30%] left-[4%] z-0 hidden w-[17%] max-w-[150px] md:block">
+              <motion.div {...pop(0.5, -10)}>
+                <PhoneFrame>
+                  <VideoCard media={workshop.cover} accent={workshop.accent} overlay={false} autoPlay autoPlayOnHover={false} />
+                </PhoneFrame>
+              </motion.div>
+            </motion.div>
           ) : null}
 
-          <motion.p
-            className="font-script absolute top-[6%] right-[4%] z-20 rotate-6 text-xl text-ink sm:text-2xl"
-            {...fade(0.85)}
+          {/* stickers */}
+          <motion.div style={{ y: mid }} className="absolute inset-0 z-30">
+            <Smiley className="top-[8%] right-[10%] h-14 w-14 sm:h-20 sm:w-20" rotate={12} />
+            <GoldStar className="top-[4%] left-[2%] h-12 w-12 sm:top-[6%] sm:left-[22%] sm:h-16 sm:w-16" rotate={-12} float={5} />
+            <GoldStar className="top-[52%] right-[18%] h-10 w-10 sm:h-12 sm:w-12" rotate={14} float={7} delay={-2} />
+            <ChromeStar className="top-[48%] left-[2%] h-10 w-10 sm:left-[20%] sm:h-14 sm:w-14" rotate={-18} float={8} />
+            <SparkLines className="top-[3%] left-[37%] hidden h-10 w-10 sm:block" />
+            <BubbleWord className="top-[66%] right-[2%] hidden text-[2rem] sm:right-[16%] sm:block sm:text-[3rem]" rotate={-8} float={7}>
+              STORY FIRST
+            </BubbleWord>
+          </motion.div>
+          <motion.div style={{ rotate: spin }} className="absolute right-[4%] bottom-[8%] z-30 h-16 w-16 sm:h-24 sm:w-24">
+            <Disc className="inset-0 h-full w-full" float={0} />
+          </motion.div>
+        </div>
+
+        {/* Cards overlapping the bottom of the collage */}
+        <div className="relative z-40 -mt-16 grid items-start gap-6 pb-20 sm:-mt-20 sm:pb-28 lg:-mt-24 lg:grid-cols-12 lg:gap-8">
+          <motion.div
+            className="lg:col-span-7"
+            initial={reduce ? false : { opacity: 0, y: 40, rotate: -3 }}
+            animate={{ opacity: 1, y: 0, rotate: -1 }}
+            transition={{ duration: 0.9, delay: 0.5, ease }}
           >
-            story first ✦
-          </motion.p>
-          <motion.p
-            className="font-script absolute bottom-[3%] left-[3%] z-20 -rotate-6 text-xl text-ink sm:text-2xl"
-            {...fade(0.95)}
+            <BrowserCard>
+              <div className="px-6 pt-6 pb-7 sm:px-9 sm:pt-8 sm:pb-9">
+                <h1 className="font-display text-[clamp(3rem,10vw,6.4rem)] leading-[0.92] text-ink">
+                  <MaskedWord delay={0.7} reduce={reduce}>
+                    Hi,
+                  </MaskedWord>{' '}
+                  <MaskedWord delay={0.78} reduce={reduce}>
+                    I&apos;m
+                  </MaskedWord>
+                  <br />
+                  <MaskedWord delay={0.86} reduce={reduce}>
+                    <span className="text-rose">{siteConfig.firstName}</span>
+                  </MaskedWord>
+                </h1>
+                <p className="mt-5 font-display text-[clamp(1.25rem,2.6vw,1.75rem)] leading-tight text-ink">
+                  I make brands impossible to <span className="highlight">scroll past.</span>
+                </p>
+                <p className="mt-3 max-w-lg text-[0.95rem] leading-relaxed text-muted sm:text-base">{siteConfig.heroText}</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="#work"
+                    className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3.5 text-sm font-semibold text-ivory shadow-[0_6px_0_#4a4a4a] transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_4px_0_#4a4a4a] active:translate-y-[6px] active:shadow-none"
+                  >
+                    See my work
+                    <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:rotate-45" />
+                  </a>
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center rounded-full bg-[#fff0f5] px-6 py-3.5 text-sm font-semibold text-ink ring-2 ring-rose/30 transition-transform duration-200 hover:-translate-y-0.5"
+                  >
+                    Let&apos;s talk
+                  </a>
+                </div>
+              </div>
+            </BrowserCard>
+          </motion.div>
+
+          <motion.div
+            className="lg:col-span-5 lg:mt-24"
+            initial={reduce ? false : { opacity: 0, y: 40, rotate: 4 }}
+            animate={{ opacity: 1, y: 0, rotate: 1.5 }}
+            transition={{ duration: 0.9, delay: 0.7, ease }}
           >
-            always filming
-          </motion.p>
+            <div className="relative rounded-[22px] bg-paper px-6 py-7 shadow-[0_24px_50px_rgba(60,90,140,0.18)] ring-1 ring-ink/5 sm:px-8">
+              <GoldStar className="-top-6 -right-4 h-12 w-12" rotate={18} float={6} />
+              <p className="font-mono text-xs leading-relaxed tracking-[0.12em] text-ink uppercase sm:text-[13px]">
+                Content creator &amp; creative strategist
+              </p>
+              <span className="my-4 block h-px w-24 bg-ink/40" aria-hidden="true" />
+              <ul className="space-y-1.5 font-mono text-xs tracking-[0.1em] text-ink/80 uppercase sm:text-[13px]">
+                {siteConfig.disciplines.map((item) => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="text-rose" aria-hidden="true">
+                      ✦
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-5 flex items-center gap-2 font-mono text-xs tracking-[0.1em] text-ink/70 uppercase">
+                <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#7ed6a0] motion-reduce:animate-none" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-[#3fbf77]" />
+                </span>
+                {siteConfig.availability}
+              </p>
+              <a
+                href="#contact"
+                className="group mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-rose px-6 py-3.5 font-mono text-xs font-medium tracking-[0.18em] text-white uppercase shadow-[0_6px_0_#a85a7c] transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_4px_0_#a85a7c] active:translate-y-[6px] active:shadow-none"
+              >
+                Let&apos;s collaborate
+                <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+              </a>
+            </div>
+          </motion.div>
         </div>
       </div>
 
-      <motion.div className="wrap flex items-end justify-between gap-6 pb-8 sm:pb-10" {...fade(1)}>
-        <a
-          href="#work"
-          className="flex items-center gap-3 text-[10px] font-semibold tracking-[0.22em] text-ink/60 uppercase transition-colors hover:text-ink sm:text-[11px]"
-        >
-          <span className="relative h-10 w-px overflow-hidden bg-ink/15" aria-hidden="true">
-            <span className="absolute inset-x-0 top-0 h-1/2 animate-[scroll-cue_1.8s_cubic-bezier(0.65,0,0.35,1)_infinite] bg-ink motion-reduce:animate-none" />
-          </span>
-          Scroll to explore
-        </a>
-        <p className="hidden text-[11px] font-semibold tracking-[0.22em] text-ink/45 uppercase sm:block">
-          {String(projects.length).padStart(2, '0')} case studies below
-        </p>
-      </motion.div>
+      {/* Cloud bank into the next section */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24" aria-hidden="true">
+        <PuffCloud className="bottom-0 left-[-4%] w-72" float={0} />
+        <PuffCloud className="bottom-[-10px] left-[30%] w-80" float={0} />
+        <PuffCloud className="right-[-4%] bottom-0 w-72" float={0} />
+      </div>
     </section>
   )
 }

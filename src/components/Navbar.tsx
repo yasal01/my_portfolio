@@ -101,6 +101,7 @@ export function Navbar() {
   const [openKey, setOpenKey] = useState<string | null>(null)
   const open = openKey === location.key
   const isHome = location.pathname === '/'
+  const isCaseStudy = location.pathname.startsWith('/work/')
 
   const { scrollYProgress } = useScroll()
   const progress = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
@@ -145,18 +146,18 @@ export function Navbar() {
   return (
     <header
       className={`sticky top-0 z-50 w-full py-3 transition-colors duration-500 ${
-        pill || open ? 'bg-transparent' : isHome ? 'bg-blush' : 'bg-ivory'
+        pill || open || isHome || isCaseStudy ? 'bg-transparent' : 'bg-ivory'
       }`}
     >
       <div
         className={`relative mx-auto flex w-[min(1180px,calc(100%-2rem))] items-center justify-between gap-3 rounded-full py-2 transition-[max-width,padding,background-color,box-shadow] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] max-[380px]:w-[calc(100%-1.25rem)] ${
           pill
-            ? 'max-w-[900px] bg-ivory/80 pr-2 pl-5 shadow-[0_10px_40px_rgba(29,29,29,0.08)] ring-1 ring-ink/5 backdrop-blur-md'
-            : 'max-w-[1180px] bg-transparent px-0'
+            ? 'glass max-w-[900px] pr-2 pl-5'
+            : 'max-w-[1180px] border border-transparent bg-transparent px-0'
         }`}
       >
         <Link to="/" onClick={(event) => go(event, siteConfig.menu[0])} className="group/logo relative z-10 flex shrink-0 items-center gap-1.5" aria-label={`${siteConfig.name}, home`}>
-          <span className="flex font-serif text-[1.45rem] leading-none font-extrabold tracking-[-0.03em] text-ink sm:text-2xl">
+          <span className="font-display flex text-[1.5rem] leading-none text-ink sm:text-[1.65rem]">
             {siteConfig.name.split('').map((letter, index) => (
               <span
                 key={`${letter}-${index}`}

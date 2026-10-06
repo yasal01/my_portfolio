@@ -1,24 +1,26 @@
 import { About } from '../components/About'
+import { CaseFiles } from '../components/CaseFiles'
 import { Contact } from '../components/Contact'
-import { FeaturedContent } from '../components/FeaturedContent'
+import { Formats } from '../components/Formats'
 import { Hero } from '../components/Hero'
-import { Marquee } from '../components/Marquee'
-import { MoreProjects } from '../components/MoreProjects'
+import { LongForm } from '../components/LongForm'
 import { Process } from '../components/Process'
-import { SelectedWork } from '../components/SelectedWork'
 import { Services } from '../components/Services'
+import { ShortForm } from '../components/ShortForm'
+import { Stills } from '../components/Stills'
 
-/** Hero → Selected work → Content in motion → More projects → Services → About → Process → Contact */
+/** Sky half: hero → formats → short-form → long-form → case studies → stills; pink half: about → services → process → contact */
 export function Home() {
   return (
     <main>
       <Hero />
-      <Marquee />
-      <SelectedWork />
-      <FeaturedContent />
-      <MoreProjects />
-      <Services />
+      <Formats />
+      <ShortForm />
+      <LongForm />
+      <CaseFiles />
+      <Stills />
       <About />
+      <Services />
       <Process />
       <Contact />
     </main>

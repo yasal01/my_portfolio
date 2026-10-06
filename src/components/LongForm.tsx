@@ -1,0 +1,102 @@
+import { ArrowUpRight, Check, Clapperboard } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { projects, type Project } from '../data/projects'
+import { DropIn, Parallax } from './Motion'
+import { Chip, Clipboard, FactCard, NameTape, TornNote } from './Paper'
+import { SectionReveal } from './SectionReveal'
+import { ChromeStar, PuffCloud, Smiley } from './Stickers'
+import { VideoCard } from './VideoCard'
+
+const notes = ['Room for the whole story', 'Made for YouTube, ads & websites', 'Cinematic, never chaotic']
+
+function LongProject({ project, index }: { project: Project; index: number }) {
+  return (
+    <article className={index % 2 === 1 ? 'lg:mt-32' : ''}>
+      <DropIn rotate={index % 2 === 0 ? -1.5 : 1.5}>
+        <Link to={`/work/${project.slug}`} className="group block" aria-label={`${project.title}: view project`}>
+          <Clipboard className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2">
+            <div className="rounded-xl bg-paper p-2 shadow-[0_6px_14px_rgba(0,0,0,0.12)] sm:p-3">
+              <div className="aspect-video overflow-hidden rounded-lg">
+                <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+              </div>
+              <div className="flex items-center justify-center gap-2 pt-3 pb-1">
+                <Chip tone="sun">
+                  <Clapperboard size={12} /> {project.chip}
+                </Chip>
+                <Chip tone="lilac">Long form</Chip>
+              </div>
+            </div>
+          </Clipboard>
+        </Link>
+      </DropIn>
+      <div className="mx-auto max-w-sm">
+        <NameTape className="relative z-10 -mt-4">{project.title}</NameTape>
+        <FactCard facts={project.facts} className="mt-4" />
+        <div className="mt-5 flex justify-center">
+          <Link
+            to={`/work/${project.slug}`}
+            className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ivory shadow-[0_5px_0_#4a4a4a] transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_3px_0_#4a4a4a]"
+          >
+            Watch full video <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+          </Link>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+/** Long-form / cinematic work: videos on clipboards with a torn checklist note. */
+export function LongForm() {
+  const long = projects.filter((project) => project.format === 'long')
+  if (long.length === 0) return null
+
+  return (
+    <section className="bg-sky-dots relative overflow-hidden pb-28 sm:pb-36">
+      <PuffCloud className="top-10 -right-20 w-80" float={20} />
+      <PuffCloud className="top-[45%] -left-24 w-80" float={24} delay={-6} />
+
+      <div className="wrap relative">
+        <div className="grid items-center gap-10 lg:grid-cols-12">
+          <SectionReveal className="lg:col-span-7">
+            <div className="rounded-[26px] bg-paper p-7 shadow-[0_24px_50px_rgba(60,90,140,0.16)] ring-1 ring-ink/5 sm:p-10">
+              <Chip tone="pink">Long-form</Chip>
+              <h2 className="font-display mt-4 text-[clamp(2.4rem,6.5vw,4.6rem)] leading-[0.95]">
+                Stories with room to <span className="highlight">breathe</span>
+              </h2>
+              <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-muted sm:text-base">
+                Horizontal, cinematic pieces for when the story needs more than fifteen seconds: reviews, brand films and whole worlds.
+              </p>
+            </div>
+          </SectionReveal>
+
+          <div className="relative lg:col-span-5">
+            <Parallax speed={40}>
+              <DropIn rotate={-5}>
+                <TornNote className="mx-auto max-w-xs" rotate={0}>
+                  <ul className="space-y-3">
+                    {notes.map((note) => (
+                      <li key={note} className="font-display flex items-center gap-3 text-lg leading-tight text-ink sm:text-xl">
+                        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white text-rose">
+                          <Check size={14} strokeWidth={3} />
+                        </span>
+                        {note}
+                      </li>
+                    ))}
+                  </ul>
+                </TornNote>
+              </DropIn>
+              <Smiley className="right-[8%] -bottom-6 h-14 w-14" rotate={-10} />
+              <ChromeStar className="-top-8 left-[6%] h-14 w-14" rotate={16} />
+            </Parallax>
+          </div>
+        </div>
+
+        <div className="mt-20 grid gap-20 lg:grid-cols-2 lg:gap-12">
+          {long.map((project, index) => (
+            <LongProject key={project.slug} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
