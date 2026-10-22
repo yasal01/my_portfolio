@@ -10,6 +10,17 @@ import { VideoCard } from './VideoCard'
 const notes = ['Paced for watch time', 'Made for YouTube, ads & websites', 'Cinematic, never chaotic']
 
 function LongProject({ project, index }: { project: Project; index: number }) {
+  const isWebsite = Boolean(project.websiteUrl)
+  const previewMedia = project.websitePreview
+    ? {
+        type: 'image' as const,
+        src: project.websitePreview,
+        alt: `${project.title} website homepage`,
+        orientation: 'horizontal' as const,
+      }
+    : project.cover
+  const roleLine = project.websiteRoles?.length ? project.websiteRoles : project.roles
+
   return (
     <article className={index % 2 === 1 ? 'lg:mt-32' : ''}>
       <DropIn rotate={index % 2 === 0 ? -1.5 : 1.5}>
@@ -17,13 +28,13 @@ function LongProject({ project, index }: { project: Project; index: number }) {
           <Clipboard className="transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-2">
             <div className="rounded-xl bg-paper p-2 shadow-[0_6px_14px_rgba(0,0,0,0.12)] sm:p-3">
               <div className="aspect-video overflow-hidden rounded-lg">
-                <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+                <VideoCard media={previewMedia} accent={project.accent} overlay={false} autoPlay={!isWebsite} />
               </div>
               <div className="flex items-center justify-center gap-2 pt-3 pb-1">
                 <Chip tone="sun">
                   <Clapperboard size={12} /> {project.chip}
                 </Chip>
-                <Chip tone="lilac">Long form</Chip>
+                <Chip tone={isWebsite ? 'sky' : 'lilac'}>{isWebsite ? 'Website' : 'Long form'}</Chip>
               </div>
             </div>
           </Clipboard>
@@ -32,16 +43,27 @@ function LongProject({ project, index }: { project: Project; index: number }) {
       <div className="mx-auto max-w-sm">
         <NameTape className="relative z-10 -mt-4">{project.title}</NameTape>
         <p className="mt-3 text-center font-mono text-[10px] leading-relaxed tracking-[0.14em] text-ink/70 uppercase sm:text-[11px]">
-          <span className="text-rose">My role ·</span> {project.roles.join(' · ')}
+          <span className="text-rose">My role ·</span> {roleLine.join(' · ')}
         </p>
         <FactCard facts={project.facts} className="mt-4" />
-        <div className="mt-5 flex justify-center">
+        <div className="mt-5 flex flex-wrap justify-center gap-2">
           <Link
             to={`/work/${project.slug}`}
             className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ivory shadow-[0_5px_0_#4a4a4a] transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_3px_0_#4a4a4a]"
           >
-            Watch full video <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+            {isWebsite ? 'View project' : project.cover.type === 'video' ? 'Watch full video' : 'View project'}{' '}
+            <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
           </Link>
+          {project.websiteUrl ? (
+            <a
+              href={project.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 rounded-full bg-paper px-5 py-3 text-sm font-semibold text-ink shadow-[0_5px_0_rgba(60,90,140,0.2)] ring-1 ring-ink/10 transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_3px_0_rgba(60,90,140,0.2)]"
+            >
+              Explore website <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+            </a>
+          ) : null}
         </div>
       </div>
     </article>
@@ -62,12 +84,12 @@ export function LongForm() {
         <div className="grid items-center gap-10 lg:grid-cols-12">
           <SectionReveal className="lg:col-span-7">
             <div className="rounded-[26px] bg-paper p-7 shadow-[0_24px_50px_rgba(60,90,140,0.16)] ring-1 ring-ink/5 sm:p-10">
-              <Chip tone="pink">Video editing · Long-form</Chip>
+              <Chip tone="pink">Long-form · Websites</Chip>
               <h2 className="font-display mt-4 text-[clamp(2.4rem,6.5vw,4.6rem)] leading-[0.95]">
                 Stories with room to <span className="highlight">breathe</span>
               </h2>
               <p className="mt-4 max-w-md text-[0.95rem] leading-relaxed text-muted sm:text-base">
-                Horizontal edits for when the story needs more time: product reviews, promotional pieces and brand films, paced and cut for the screen they play on.
+                Horizontal films and brand websites that need more space: product reviews, fashion worlds and shop fronts designed for the screen they live on.
               </p>
             </div>
           </SectionReveal>

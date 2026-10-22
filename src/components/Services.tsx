@@ -1,5 +1,5 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, CalendarDays, Check, Compass, Scissors, Sparkles } from 'lucide-react'
+import { ArrowUpRight, CalendarDays, Check, Code2, Palette, Scissors } from 'lucide-react'
 import { useState } from 'react'
 import { services } from '../data/services'
 import { GlossyStar } from './Decor'
@@ -12,8 +12,8 @@ const tabColors = ['#ffd9ea', '#e6dcff', '#d7ebff', '#e3ebff']
 const icons = {
   calendar: CalendarDays,
   scissors: Scissors,
-  sparkles: Sparkles,
-  compass: Compass,
+  code: Code2,
+  palette: Palette,
 }
 
 /** Services as folder tabs: pick a tab, the paper-clipped card swaps. No prices — quoted on request. */
@@ -29,7 +29,7 @@ export function Services() {
       <PuffCloud className="bottom-10 -left-16 w-72" float={24} delay={-6} />
 
       <div className="wrap relative">
-        <ScrapHeading label="Services" tone="sky" sub="Manage your socials, create the content and edit it: one person, one consistent feed. Every brief is quoted on its own.">
+        <ScrapHeading label="Services" tone="sky" sub="Social media, video, websites and UI/UX — one creative toolkit. Every brief is quoted on its own.">
           How I can <span className="highlight">help</span>
         </ScrapHeading>
 

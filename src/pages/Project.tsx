@@ -57,7 +57,17 @@ export function Project() {
   if (!project) return <Navigate to="/" replace />
 
   const next = getNextProject(project.slug)
-  const horizontal = project.cover.orientation === 'horizontal'
+  const previewMedia = project.websitePreview
+    ? {
+        type: 'image' as const,
+        src: project.websitePreview,
+        alt: `${project.title} website homepage`,
+        orientation: 'horizontal' as const,
+      }
+    : project.cover
+  const horizontal = previewMedia.orientation === 'horizontal'
+  const roleLine = project.websiteRoles?.length ? project.websiteRoles : project.roles
+  const roleChips = project.websiteRoles?.length ? project.websiteRoles : project.role
   const titleWords = project.title.split(' ')
 
   return (
@@ -80,6 +90,7 @@ export function Project() {
             <div className={horizontal ? 'max-w-3xl' : 'lg:col-span-7'}>
               <div className="flex flex-wrap items-center gap-3">
                 <Chip tone="sun">{project.chip}</Chip>
+                {project.websiteUrl ? <Chip tone="sky">Website</Chip> : null}
                 <span className="font-script text-2xl text-ink/60">({projectNumber(project)})</span>
               </div>
               <h1 className="font-display mt-4 text-[clamp(3rem,10vw,6.6rem)] leading-[0.92]">
@@ -100,16 +111,33 @@ export function Project() {
               <p className="mt-3 font-mono text-xs tracking-[0.16em] text-ink/60 uppercase">{project.category}</p>
               <p className="mt-3 inline-flex flex-wrap items-center gap-x-2 rounded-full bg-white/80 px-4 py-2 font-mono text-[11px] tracking-[0.14em] text-ink uppercase shadow-[0_6px_14px_rgba(60,90,140,0.12)] sm:text-xs">
                 <span className="text-rose">My role</span>
-                {project.roles.join(' · ')}
+                {roleLine.join(' · ')}
               </p>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-ink/80 sm:text-lg">{project.summary}</p>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-ink/80 sm:text-lg">
+                {project.websitePurpose ?? project.summary}
+              </p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {project.tags.map((tag, index) => (
                   <Chip key={tag} tone={chipTones[index % chipTones.length]}>
                     {tag}
                   </Chip>
                 ))}
+                {project.websiteTech?.map((tech) => (
+                  <Chip key={tech} tone="mint">
+                    {tech}
+                  </Chip>
+                ))}
               </div>
+              {project.websiteUrl ? (
+                <a
+                  href={project.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group mt-6 inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-ivory shadow-[0_5px_0_#4a4a4a] transition-all duration-200 hover:translate-y-[2px] hover:shadow-[0_3px_0_#4a4a4a]"
+                >
+                  Explore website <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+                </a>
+              ) : null}
             </div>
 
             <motion.div style={{ y: mediaY }} className={`relative ${horizontal ? '' : 'mx-auto w-full max-w-[230px] sm:max-w-[300px] lg:col-span-5'}`}>
@@ -118,13 +146,13 @@ export function Project() {
                   <Clipboard>
                     <div className="rounded-xl bg-paper p-2 sm:p-3">
                       <div className="aspect-video overflow-hidden rounded-lg">
-                        <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+                        <VideoCard media={previewMedia} accent={project.accent} overlay={false} autoPlay />
                       </div>
                     </div>
                   </Clipboard>
                 ) : (
                   <PhoneFrame>
-                    <VideoCard media={project.cover} accent={project.accent} overlay={false} autoPlay />
+                    <VideoCard media={previewMedia} accent={project.accent} overlay={false} autoPlay />
                   </PhoneFrame>
                 )}
               </DropIn>
@@ -144,24 +172,59 @@ export function Project() {
 
         <div className="wrap relative mx-auto grid max-w-4xl gap-14">
           <Page num="01" title="The Project" lead="What I created" rotate={-1}>
-            <p className="font-display text-[clamp(1.3rem,2.6vw,1.9rem)] leading-snug">{project.summary}</p>
+            <p className="font-display text-[clamp(1.3rem,2.6vw,1.9rem)] leading-snug">
+              {project.websitePurpose ?? project.summary}
+            </p>
           </Page>
 
           <Page num="02" title="The Idea" lead="The creative direction behind it" rotate={1} lined>
             <p className="text-[1.02rem] leading-[28px] text-ink/80">{project.idea}</p>
           </Page>
 
-          <Page num="03" title="The Content" lead="What was produced" rotate={-0.8}>
-            <ul className="grid gap-2.5 sm:grid-cols-2">
-              {project.contentCreated.map((item) => (
-                <li key={item} className="flex items-center gap-3 text-[1rem]">
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-rose text-rose">
-                    <Check size={12} strokeWidth={3} />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
+          <Page
+            num="03"
+            title={project.websiteHighlights?.length ? 'Design decisions' : 'The Content'}
+            lead={project.websiteHighlights?.length ? 'Layout, interface & usability choices' : 'What was produced'}
+            rotate={-0.8}
+          >
+            {project.websiteHighlights?.length ? (
+              <ul className="grid gap-2.5">
+                {project.websiteHighlights.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[1rem]">
+                    <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-rose text-rose">
+                      <Check size={12} strokeWidth={3} />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            {project.websiteTech?.length ? (
+              <div className={`${project.websiteHighlights?.length ? 'mt-6' : ''} flex flex-wrap gap-2`}>
+                {project.websiteTech.map((tech) => (
+                  <Chip key={tech} tone="mint">
+                    {tech}
+                  </Chip>
+                ))}
+              </div>
+            ) : null}
+            {project.contentCreated.length > 0 ? (
+              <>
+                {project.websiteHighlights?.length ? (
+                  <p className="mt-8 font-mono text-[11px] tracking-[0.18em] text-ink/50 uppercase">What shipped</p>
+                ) : null}
+                <ul className={`grid gap-2.5 sm:grid-cols-2 ${project.websiteHighlights?.length ? 'mt-3' : ''}`}>
+                  {project.contentCreated.map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-[1rem]">
+                      <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-rose text-rose">
+                        <Check size={12} strokeWidth={3} />
+                      </span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
             {project.gallery.length > 0 ? (
               <div className="mt-10 flex flex-wrap justify-center gap-6 sm:gap-10">
                 {project.gallery.map((media, index) => (
@@ -182,7 +245,9 @@ export function Project() {
               <TornNote className="mx-auto max-w-2xl px-8 py-10 sm:px-12" rotate={0}>
                 <p className="font-display text-3xl text-rose">04</p>
                 <h2 className="font-display mt-1 text-[clamp(1.9rem,4.4vw,2.8rem)] leading-none">The Goal</h2>
-                <p className="mt-2 font-mono text-[11px] tracking-[0.18em] text-ink/50 uppercase">What the content set out to do</p>
+                <p className="mt-2 font-mono text-[11px] tracking-[0.18em] text-ink/50 uppercase">
+                  {project.websiteUrl ? 'What the website set out to do' : 'What the content set out to do'}
+                </p>
                 <p className="mt-5 text-[1.05rem] leading-relaxed text-ink">{project.goal}</p>
               </TornNote>
             </DropIn>
@@ -191,7 +256,7 @@ export function Project() {
 
           <Page num="05" title="My Role" lead="Hands on, start to finish" rotate={1.2} lined>
             <div className="flex flex-wrap gap-2">
-              {project.role.map((item, index) => (
+              {roleChips.map((item, index) => (
                 <Chip key={item} tone={chipTones[index % chipTones.length]}>
                   {item}
                 </Chip>

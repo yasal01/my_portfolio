@@ -8,23 +8,26 @@
 export const siteConfig = {
   name: 'Yasal',
   firstName: 'Yasal',
-  role: 'Social Media Manager & Video Editor',
-  tagline: 'I plan, create & edit content that makes brands stand out.',
+  role: 'Social Media · Video · Web & UI/UX',
+  tagline: 'I plan content, edit video, and design brand websites that feel clear and consistent.',
   heroText:
-    'From the content calendar to the final cut: I manage your social presence, shape the ideas and edit them into videos people actually stop for.',
+    'From content calendars and scroll-stopping edits to responsive websites and clear UI — I combine social media management, video editing, website development and UI/UX design so brands feel consistent everywhere they show up.',
   /** What I do, in order of focus */
-  disciplines: ['Social media management', 'Video editing', 'Content creation', 'Creative strategy'],
+  disciplines: [
+    'Social media management',
+    'Video editing',
+    'Website development',
+    'UI/UX design',
+  ],
   about: [
-    "I'm a social media manager and video editor who loves the whole journey of a post: planning the calendar, shaping the idea, and cutting the final edit so it lands in the first second.",
-    "I plan content with a reason to exist, edit with an eye for pacing, text and transitions, and keep experimenting with AI and new creative tools to push ideas further. The goal is always the same: help brands show up consistently and feel more human, memorable and worth following.",
+    "I'm a social media manager and video editor who also designs and builds brand websites — so the story stays consistent from the feed to the site.",
+    'I care about layout, hierarchy, typography, colour and spacing as much as pacing in a reel. Soft Glow Oil, NOIREL and SoCutesy show that interface and website work in practice: clear navigation, responsive layouts and usable UI.',
   ],
   availability: 'Available for collaborations',
   location: '',
 
-  // Add your portrait: '/media/portrait.jpg'
   portrait: '/media/portrait.jpg',
 
-  // Replace these with your real links
   email: 'yasalshabbir05@gmail.com',
   instagram: 'https://www.instagram.com/yasaall__/',
 
@@ -44,20 +47,20 @@ export const siteConfig = {
     { id: 'contact', label: 'Contact', href: '/#contact', accent: 'bg-yellow' },
   ],
 
-  /** Things I love doing — shown in About */
+  /** Things I love doing — shown in About (includes all four skill areas) */
   aboutLoves: [
-    'Planning content with a purpose',
-    'Editing: pacing, text & transitions',
-    'Turning briefs into creative concepts',
-    'Experimenting with AI & creative tools',
-    'Making brands feel human',
+    'Social media planning & content strategy',
+    'Video editing: pacing, text & transitions',
+    'Website development with React',
+    'UI/UX: layouts, hierarchy & usability',
+    'Responsive, brand-led interfaces',
+    'Making brands feel human online',
   ],
 
   process: [
-    { num: '01', title: 'Plan', text: 'Understand the brand, audience and goals, then map the content plan.' },
-    { num: '02', title: 'Concept', text: 'Hooks, formats, captions and a content calendar that fits the brand.' },
-    { num: '03', title: 'Create & edit', text: 'Shoot or source the footage, then edit with pacing, text and transitions.' },
-    { num: '04', title: 'Publish & refine', text: 'Deliver platform-ready posts and keep refining the content direction.' },
+    { num: '01', title: 'Plan', text: 'Understand the brand, audience and goals, then map content and site structure.' },
+    { num: '02', title: 'Concept', text: 'Hooks, layouts, captions and a direction that fits the brand on feed and web.' },
+    { num: '03', title: 'Create & build', text: 'Edit video with pacing and text, and shape clear UI with responsive layouts.' },
+    { num: '04', title: 'Polish & refine', text: 'Ship platform-ready work, then tighten spacing, hierarchy and usability.' },
   ],
-
 }

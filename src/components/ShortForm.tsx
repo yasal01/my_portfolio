@@ -60,6 +60,16 @@ function ShortProject({ project, index }: { project: Project; index: number }) {
           >
             View project <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:rotate-45" />
           </Link>
+          {project.websiteUrl ? (
+            <a
+              href={project.websiteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-paper px-4 py-2 text-xs font-semibold text-ink shadow-[0_4px_0_rgba(60,90,140,0.2)] ring-1 ring-ink/10 transition-all duration-200 hover:translate-y-[1px] hover:shadow-[0_2px_0_rgba(60,90,140,0.2)]"
+            >
+              Explore website <ArrowUpRight size={14} className="transition-transform duration-300 group-hover:rotate-45" />
+            </a>
+          ) : null}
         </div>
       </Parallax>
     </article>

@@ -1,40 +1,58 @@
 /**
  * ============================================================
  * SERVICES
- * Edit titles and descriptions here. No prices on purpose —
- * every project is quoted on request.
+ * Four clear categories. No prices — quoted on request.
+ * Descriptions match work shown in the portfolio.
  * ============================================================
  */
 
 export const services = [
   {
     title: 'Social Media Management',
-    text: 'Strategy, planning, content calendars and social content direction, so your page stays consistent and on-brand.',
+    text: 'Content planning, calendars and direction so your feed stays consistent, on-brand and worth following.',
     includes: [
       'Content planning & calendars',
       'Social media strategy',
-      'Instagram management',
-      'Content ideas & captions',
-      'Page growth & content direction',
+      'Account content development',
+      'Captions, hooks & ideas',
+      'Ongoing content direction',
     ],
     icon: 'calendar',
   },
   {
     title: 'Video Editing',
-    text: 'Reels, short-form content, promotional edits and branded videos, cut for the platform they live on.',
-    includes: ['Reels & short-form videos', 'Promotional & product videos', 'Transitions, text & effects', 'Pacing & storytelling'],
+    text: 'Short-form edits, Reels and promotional videos cut with pacing, text and storytelling that stop the scroll.',
+    includes: [
+      'Instagram Reels & short-form',
+      'Promotional & product videos',
+      'Engaging visual content',
+      'Transitions, captions & effects',
+      'Horizontal reviews & brand films',
+    ],
     icon: 'scissors',
   },
   {
-    title: 'Content Creation',
-    text: 'Creative concepts, social posts, campaigns and visual storytelling that give your feed something to say.',
-    includes: ['Creative concepts', 'Social media posts', 'Campaign ideas', 'Branded content', 'UGC-style videos, when needed'],
-    icon: 'sparkles',
+    title: 'Website Development',
+    text: 'Custom brand websites with responsive layouts, clear navigation and interactive pieces built in React.',
+    includes: [
+      'Website building & customisation',
+      'Responsive layouts',
+      'Sections, nav & components',
+      'Interactive UI (carts, scroll scenes)',
+      'Polish, testing & interface fixes',
+    ],
+    icon: 'code',
   },
   {
-    title: 'Creative Strategy',
-    text: 'Content direction and ideas designed around the brand, so every post has a reason to exist.',
-    includes: ['Content direction', 'Brand-led ideas', 'Campaign concepts', 'Visual direction'],
-    icon: 'compass',
+    title: 'UI/UX Design',
+    text: 'Clean, visually appealing interfaces with thoughtful layout, hierarchy and usability across devices.',
+    includes: [
+      'Website interface design',
+      'Layout & content hierarchy',
+      'Visual consistency (type, colour, space)',
+      'Navigation & simple user flows',
+      'Responsive, usable screens',
+    ],
+    icon: 'palette',
   },
 ] as const

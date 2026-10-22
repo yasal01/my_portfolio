@@ -1,4 +1,4 @@
-import { CalendarDays, Clapperboard, LayoutGrid, Lightbulb, PenLine, Scissors, Sparkles, TrendingUp } from 'lucide-react'
+import { CalendarDays, Clapperboard, Code2, LayoutGrid, Palette, PenLine, Scissors, Sparkles } from 'lucide-react'
 import { DropIn } from './Motion'
 import { ScrapHeading } from './ScrapHeading'
 import { GoldStar, PuffCloud } from './Stickers'
@@ -6,11 +6,11 @@ import { GoldStar, PuffCloud } from './Stickers'
 const formats = [
   { label: 'Content calendars', icon: CalendarDays, tint: '#ffd9ea' },
   { label: 'Instagram management', icon: LayoutGrid, tint: '#ffe4d6' },
-  { label: 'Social strategy', icon: TrendingUp, tint: '#e6dcff' },
+  { label: 'Website development', icon: Code2, tint: '#e6dcff' },
   { label: 'Captions & hooks', icon: PenLine, tint: '#e3ebff' },
   { label: 'Reels editing', icon: Scissors, tint: '#d7ebff' },
   { label: 'Promo & product videos', icon: Clapperboard, tint: '#ffd9ea' },
-  { label: 'Campaign concepts', icon: Lightbulb, tint: '#ffe4d6' },
+  { label: 'UI/UX design', icon: Palette, tint: '#ffe4d6' },
   { label: 'Visual storytelling', icon: Sparkles, tint: '#e6dcff' },
 ]
 
@@ -23,8 +23,8 @@ export function Formats() {
       <PuffCloud className="top-24 -right-16 w-60" float={18} />
       <PuffCloud className="bottom-10 -left-20 w-72" float={22} delay={-5} />
       <div className="wrap relative">
-        <ScrapHeading label="What I do" tone="sun" sub="From the content calendar to the final cut: everything your feed needs, in one place.">
-          Plan. Create. <span className="highlight">Edit.</span>
+        <ScrapHeading label="What I do" tone="sun" sub="From content calendars and edits to brand websites and clear UI — one creative toolkit.">
+          Plan. Design. <span className="highlight">Create.</span>
         </ScrapHeading>
 
         <div className="relative mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">

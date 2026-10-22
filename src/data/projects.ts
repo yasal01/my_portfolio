@@ -45,25 +45,39 @@ export type Project = {
   cover: ProjectMedia
   gallery: ProjectMedia[]
   accent: 'blush' | 'pink' | 'lavender' | 'lime' | 'sky' | 'mint' | 'yellow'
+  /** Live website URL when this project also includes a site I designed/built */
+  websiteUrl?: string
+  /** Short line for the websites section (falls back to summary) */
+  websiteBlurb?: string
+  /** Purpose of the live website (not the social content set) */
+  websitePurpose?: string
+  /** My contribution on the website build */
+  websiteRoles?: string[]
+  /** Technologies verified in the project source */
+  websiteTech?: string[]
+  /** Design / development decisions demonstrated in the build */
+  websiteHighlights?: string[]
+  /** Real homepage screenshot of the live website (preferred over video poster for UI work) */
+  websitePreview?: string
 }
 
 export const projects: Project[] = [
   {
     slug: 'soft-glow-oil',
     title: 'Soft Glow Oil',
-    category: 'Haircare · Social content',
+    category: 'Haircare · Social + Website',
     chip: 'Haircare',
-    roles: ['Social media content', 'Video editing', 'Creative direction'],
-    summary: 'A haircare content set planned and edited as one social story: a hair-first reveal reel, a glowing product film and a hands-on unboxing.',
+    roles: ['Social media content', 'Video editing', 'Website UI'],
+    summary: 'A haircare content set planned and edited as one social story — plus a warm, shoppable brand website with the same soft glow.',
     idea: 'Lead with the result, then the reason. The reveal reel opens on the hair itself (length, shine, movement) before revealing the bottle behind it, with “the hair vs the product I use” doing the hook. A warm product film and a tactile unboxing round out the set, so the brand gets a hero clip, a proof point and a how-to.',
-    goal: 'Make the oil feel like a believable ritual: show the hair first so the product earns its moment, and give the brand content for both organic posts and ads.',
-    tags: ['Reels', 'Product film', 'Haircare', 'Editing'],
-    role: ['Creative direction', 'Concept & hooks', 'Video editing', 'Filming', 'Product styling', 'On camera for the reveal'],
-    contentCreated: ['Hair reveal reel', 'Cinematic product film', 'Unboxing & application clip', 'Social cut-downs'],
+    goal: 'Make the oil feel like a believable ritual on social — and give Soft Glow a warm, shoppable website that matches the same brand mood.',
+    tags: ['Reels', 'Product film', 'Haircare', 'Web UI'],
+    role: ['Creative direction', 'Concept & hooks', 'Video editing', 'Website UI & build', 'Product styling'],
+    contentCreated: ['Hair reveal reel', 'Cinematic product film', 'Unboxing & application clip', 'Brand website'],
     facts: [
-      { label: 'Format', value: '9:16' },
+      { label: 'Format', value: '9:16 + web' },
       { label: 'Clips', value: '3' },
-      { label: 'Role', value: 'Edit + direct' },
+      { label: 'Role', value: 'Edit + UI' },
     ],
     format: 'short',
     cover: {
@@ -89,6 +103,18 @@ export const projects: Project[] = [
       },
     ],
     accent: 'blush',
+    websiteUrl: 'https://soft-glow-oil.vercel.app/',
+    websiteBlurb: 'A warm, feminine haircare storefront: product pages, ingredients, reviews and a soft shopping flow that matches the brand’s glow.',
+    websitePurpose: 'Give Soft Glow Oil a soft, shoppable brand site that feels as gentle as the product — from homepage story to product detail.',
+    websiteRoles: ['UI design', 'Website development', 'Responsive layout', 'Product & cart experience'],
+    websiteTech: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS'],
+    websitePreview: '/media/soft-glow-site.jpg',
+    websiteHighlights: [
+      'Warm cream/gold palette with clear hierarchy: announcement bar, nav, hero, CTA',
+      'Section order planned for scanning: product, ingredients, story, reviews, FAQ',
+      'Simple shop flow: product detail, purchase panel and cart drawer',
+      'Responsive nav and components that stay readable on phone and desktop',
+    ],
   },
   {
     slug: 'lip-gloss-workshop',
@@ -199,8 +225,64 @@ export const projects: Project[] = [
     },
     gallery: [],
     accent: 'sky',
+    websiteUrl: 'https://noirel-aura.vercel.app/',
+    websiteBlurb: 'A scroll-driven editorial site in charcoal, graphite and silver — brutalist frames, film scenes and a cinematic first impression for the label.',
+    websitePurpose: 'Build a complete fashion-label world online: dark editorial UI, film-led chapters and a scroll experience that feels like walking through a campaign.',
+    websiteRoles: ['Concept & art direction', 'UI/UX design', 'Website development', 'Scroll choreography'],
+    websiteTech: ['Next.js', 'React', 'TypeScript', 'GSAP', 'Lenis'],
+    websitePreview: '/media/noirel-site.jpg',
+    websiteHighlights: [
+      'Dark monochrome UI with strong type hierarchy (display serif + utility sans)',
+      'Chapter rail and scroll cues so long-form browsing stays oriented',
+      'Scroll-driven scenes (GSAP + Lenis) for a film-like path through the brand',
+      'Editorial frames and CTAs designed to stay clear across screen sizes',
+    ],
+  },
+  {
+    slug: 'socutesy',
+    title: 'SoCutesy',
+    category: 'E-commerce · Website',
+    chip: 'Shop',
+    roles: ['Website development', 'UI/UX design', 'Frontend build'],
+    summary: 'A boutique e-commerce site for customisable Polaroid-style gifts — shop pages, product flows and a soft, scrapbook-inspired storefront.',
+    idea: 'SoCutesy needed a storefront that feels as personal as the gifts: magazine-style hero moments, clear product browsing, and a customisation path that still feels light and friendly on mobile.',
+    goal: 'Ship a responsive React shop front that makes browsing and ordering feel simple, while keeping the brand’s cute, gift-led personality.',
+    tags: ['E-commerce', 'React', 'Vite', 'UI/UX'],
+    role: ['UI design', 'Frontend development', 'Responsive layouts', 'Shop & product flows'],
+    contentCreated: ['Shop homepage', 'Product browsing UI', 'Responsive storefront'],
+    facts: [
+      { label: 'Stack', value: 'Vite' },
+      { label: 'Type', value: 'Shop' },
+      { label: 'Role', value: 'Build + UI' },
+    ],
+    format: 'long',
+    cover: {
+      type: 'image',
+      src: '/media/socutesy-site.jpg',
+      alt: 'SoCutesy gift shop homepage with soft pastel UI and shop CTAs',
+      orientation: 'horizontal',
+    },
+    gallery: [],
+    accent: 'mint',
+    websiteUrl: 'https://socutesy.vercel.app/',
+    websiteBlurb: 'A soft boutique shop for Polaroid-style gifts, built as a responsive React storefront.',
+    websitePurpose: 'Give SoCutesy a live shop experience: browse gifts, explore products and move through a friendly ordering flow on any screen.',
+    websiteRoles: ['Website development', 'UI/UX design', 'Responsive frontend'],
+    websiteTech: ['Vite', 'React', 'Tailwind CSS', 'Framer Motion'],
+    websitePreview: '/media/socutesy-site.jpg',
+    websiteHighlights: [
+      'Pastel boutique UI with clear hierarchy: announcement, nav, hero, shop CTA',
+      'Category chips and product browsing laid out for quick scanning',
+      'Phone mockups and gift flows designed to feel personal on mobile',
+      'Consistent spacing, type and soft colour system across the storefront',
+    ],
   },
 ]
+
+/** Projects that have a live website to showcase. */
+export function getWebsiteProjects() {
+  return projects.filter((project) => Boolean(project.websiteUrl))
+}
 
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug)

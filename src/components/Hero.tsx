@@ -138,7 +138,7 @@ export function Hero() {
           {[
             { label: 'Social Media Manager', icon: '✦', cls: 'top-[28%] left-[0%] sm:left-[4%] lg:left-[10%]', rot: -6, delay: 0.75, tint: 'from-[#ffe1ef] to-white' },
             { label: 'Video Editor', icon: '✂', cls: 'top-[52%] right-[0%] sm:right-[6%] lg:right-[22%]', rot: 5, delay: 0.85, tint: 'from-[#e6dcff] to-white' },
-            { label: 'Content Creator', icon: '▶', cls: 'top-[70%] left-[0%] sm:left-[10%] lg:left-[18%]', rot: -3, delay: 0.95, tint: 'from-[#d7ebff] to-white' },
+            { label: 'UI/UX Designer', icon: '◇', cls: 'top-[70%] left-[0%] sm:left-[10%] lg:left-[18%]', rot: -3, delay: 0.95, tint: 'from-[#d7ebff] to-white' },
           ].map((chip) => (
             <motion.div
               key={chip.label}
@@ -205,7 +205,7 @@ export function Hero() {
                   </MaskedWord>
                 </h1>
                 <p className="mt-5 font-display text-[clamp(1.2rem,2.4vw,1.65rem)] leading-tight text-ink">
-                  I plan, create &amp; edit content that makes brands <span className="highlight">stand out.</span>
+                  I plan content, edit video &amp; design websites that make brands <span className="highlight">stand out.</span>
                 </p>
                 <p className="mt-3 max-w-lg text-[0.95rem] leading-relaxed text-muted sm:text-base">{siteConfig.heroText}</p>
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -236,7 +236,7 @@ export function Hero() {
             <div className="relative rounded-[22px] bg-paper px-6 py-7 shadow-[0_24px_50px_rgba(60,90,140,0.18)] ring-1 ring-ink/5 sm:px-8">
               <GoldStar className="-top-6 -right-4 h-12 w-12" rotate={18} float={6} />
               <p className="font-mono text-xs leading-relaxed tracking-[0.12em] text-ink uppercase sm:text-[13px]">
-                Social media manager · Video editor · Content creator
+                Social media · Video · Websites · UI/UX
               </p>
               <span className="my-4 block h-px w-24 bg-ink/40" aria-hidden="true" />
               <ul className="space-y-1.5 font-mono text-xs tracking-[0.1em] text-ink/80 uppercase sm:text-[13px]">
